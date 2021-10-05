@@ -1,0 +1,3848 @@
+\documentclass[11pt]{book}               % use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry, url}                  % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                          % ... or a4paper or a5paper or ... 
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{polynom}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{intersections}
+\usepgfplotslibrary{fillbetween}
+
+
+%% -------------------------------------- Declare the layers
+\pgfdeclarelayer{nodelayer}
+\pgfdeclarelayer{edgelayer}
+\pgfsetlayers{edgelayer,nodelayer,main}
+
+%% -------------------------------------- Declare the styles
+\tikzset{none/.style={thick}}
+\tikzset{simple/.style={thick}}
+\tikzset{filledin/.style={thick}}
+\tikzset{new/.style={thick}}
+\tikzstyle(arc) = [black, ->]
+
+
+                                
+\usepackage{amssymb, amssymb, graphicx, wasysym, helvet, fullpage}      % Math Symbols package?
+\renewcommand{\familydefault}{\sfdefault}
+
+\newtheorem{example}{Example}
+
+\parskip 6pt
+\begin{document}
+\setcounter{section}{0}
+
+\setcounter{tocdepth}{1}
+
+\tableofcontents
+\newpage
+
+\chapter{Module 1}
+
+\section{Real numbers and operations}
+
+
+So you think you know about real numbers?  This section is intended as a review of some of their properties, and
+some properties of operations that are commonly used.
+
+We assume familiarity with the basic operations of addition, subtraction, multiplication, division and exponentiation,
+even though we will review some of their properties in the subsections that follow.  
+We also assume familiarity with the precedence rules for these operations.
+These are sometimes remembered using the acronym BEDMAS, which stands for
+Brackets, then Exponents, then Multiply and Divide before you Add and Subtract:
+Always do what's inside brackets first, and then perform other operations in the order just specified.
+For example:
+\begin{itemize}
+\item $3 \cdot 4 + 5 = 12 + 5 = 17$
+\item $(-2) \cdot (4 + 5) = (-2) \cdot 9 = -18$
+\item $7 \cdot (2 \cdot 13 - 6)^2 = 7 \cdot (26 - 6)^2 = 7 \cdot 20^2 = 7 \cdot 400 = 2800$
+\item $(-4)^2 = (-4)(-4) = 16$
+\item $-4^2 = -16$ because $-4^2$ denotes the negative of the number $4^2$, or equivalently 
+because $-4^2 = 0-4^2$ and exponentiation has precedence over subtraction.
+\end{itemize}
+
+
+
+\subsection{Commutativity} 
+
+Addition of real numbers is \textbf{commutative}, which means that $a + b = b + a$ for all real numbers $a$ and $b$.  
+For example, $1+4 = 4+1$.  Both sums equal 5.
+Commutativity of addition allows a sum of finitely many real numbers to be rearranged without changing its value.
+For example $1 + 2 + 4 + 6 + 7 + 8 + 9 = 4 + 6 + 8 + 2 + 1 + 9 + 7$.
+
+Similarly, multiplication of real numbers is \textbf{commutative}, which means that $a \times b = b \times a$ for all real numbers $a$ and $b$.  For example, $4 \times 6 = 6 \times 4$.  Both products equal 24.
+
+Remember that there are several alternate notations for multiplication.
+We commonly write $a \cdot b$ or $ab$ instead of $a \times b$.
+In these notations, the equality in the previous paragraph is written 
+$a \cdot b = b \cdot a$,  or $ab=ba$.
+
+Commutativity of multiplication allows a product of finitely many real numbers to be rearranged without changing its value.
+For example, $2 \cdot 5 \cdot 3 \cdot 5 \cdot 2 = 2 \cdot 2  \cdot  5 \cdot 5 \cdot 3$.
+
+%and multiplication are both \textbf{commutative} operations, which means that two numbers can be added together in either order (and two numbers can be multiplied together in either order). Explicitly, if $a$ and $b$ are any real numbers then:
+%   $$
+%       a+b = b+a       \hspace{1cm}\mbox{and}\hspace{1cm}  ab  =   ba
+%   $$
+% 
+%For example, $1+4  =   5   =   4+1$, and $4\cdot6 = 24 = 6\cdot4$.
+
+
+\subsection{Associativity}
+
+Addition of real numbers is \textbf{associative}, which means that $(a+b)+c = a + (b+c)$ for all real numbers $a, b$ and $c$.
+For example,  $(1+4) + 6 = 5+6 = 11$, and $1+(4+6) = 1+10 = 11$, so as expected $(1+4)+6 = 1 + (4+6)$.
+
+Associativity is the property that lets us compute sums of finitely many terms by grouping them in a convenient way.
+This is equivalent to bracketing the terms as we wish.
+For example,
+$$4 + 6 + 8 + 2 + 7 + 1 + 9 = (4 + 6) + (8 + 2)  + 7 + (1 + 9)  = 10 + 10  + 7 + 10 = 37.$$
+Commutativity and associativity together allow us to compute sums of finitely many terms by rearranging the
+numbers and adding them in whichever we want.  For example
+\begin{eqnarray*}
+1 + 2 + 4 + 6 + 7 + 8 + 9 &=& 4 + 6 + 8 + 2 + 1 + 9 + 7  \quad\quad \mbox{(by commutativity)}\\
+& = & (4 + 6) + (8 + 2) + (1 + 9)  + 7  \quad\quad \mbox{(by associativity)}\\
+& = & 37.
+\end{eqnarray*}
+
+
+Similarly, multiplication real numbers is \textbf{associative}, 
+which means that $(a \cdot b) \cdot c = a \cdot (b \cdot c)$ for all real numbers $a, b$ and $c$.
+For example, 
+$(3\cdot4)\cdot25 = 12\cdot 25 = 300$, and $3\cdot(4\cdot25)=3\cdot100=300$, so as expected $(3\cdot4)\cdot25 = 3\cdot(4\cdot25)$.
+
+Associativity is the property that lets us compute products of finitely many terms by grouping them in a convenient way instead of having to multiply in the order given.
+This is equivalent to bracketing the terms as we wish.
+For example,
+$$2 \cdot 5 \cdot 3 \cdot 5 \cdot 2 = (2 \cdot 5) \cdot 3 \cdot (5 \cdot 2) = 10 \cdot 3 \cdot 10 = 300,$$
+which is an easier calculation than $2 \cdot 5 \cdot 3 \cdot 5 \cdot 2 =10\cdot 3 \cdot 5 \cdot 2 = 30 \cdot 5 \cdot 2 = 150 \cdot 2 = 300$.
+
+Commutativity and associativity together allow us to compute products of finitely many terms by rearranging the
+numbers and multiplying them in whichever we want.  For example.
+\begin{eqnarray*}
+2 \cdot 2 \cdot 3 \cdot 5 \cdot 5 &=& 2 \cdot 2 \cdot 5 \cdot 5 \cdot 3 \quad\quad \mbox{(by commutativity)}\\
+& = & (2 \cdot 2) \cdot (5 \cdot 5) \cdot 3 \quad\quad \mbox{(by associativity)}\\
+& = & 4 \cdot 25 \cdot 3 = (4 \cdot 25) \cdot 3  = 300.
+\end{eqnarray*}
+%{\color{red}Alternatively, the terms could have been rearranged differently, as in
+%$$2 \cdot 5 \cdot 3 \cdot 5 \cdot 2 = (2 \cdot 5) \cdot (5 \cdot 2) \cdot 3 = 10 \cdot 10 \cdot 3 = 300.$$}
+
+ 
+ \subsection{Distributivity}
+
+Multiplication \textbf{distributes} over addition, which means that $a (b + c) = ab + a c$ for any real numbers $a, b$ and $c$.
+Also, $(b + c) a = ba + ca$, which can be proved using the previous statement and commutativity.
+For example:
+\begin{itemize}
+\item $3(4 + 5) = 3 \cdot 4 + 3 \times 5$
+\item $(6 + 7) \cdot (-3) = 6 \cdot (-3) + 7 \cdot (-3)$
+\item $16 + 12 = 4 \cdot 4 + 3 \cdot 4 = (4 + 3) \cdot 4$
+\item $(-1)\cdot 6 + (-1) \cdot 5 = (-1)(6 + 5)$
+\end{itemize}
+
+The last two bullet points illustrate the most common use of distributivity, that is, when factoring. 
+In such situations, the distributive rule $a (b + c) = ab + a c$  is being used from right to left.
+
+Distributivity is used to expand expressions like $(a + b)(c + d)$.
+For the moment, regard $(a + b)$ as a single item.
+Then, by distributivity, $(a + b)(c + d) = (a + b)c + (a+b)d$.
+Using distributivity again gives $(a + b)(c + d) = (a + b)c + (a+b)d = ac + bc + ad + bd$.
+Rearranging the sum as $ac + ad + bc + bd$ gives  the FOIL  rule for multiplying
+binomials.  FOIL stands for First, Outer, Inner, Last, i.e., expand by multipling the First terms, then the Outer terms, then the Inner terms, then the Last terms.
+
+
+\subsection{Identity elements} 
+
+The number 0 is the identity element for addition, which means that
+$a + 0 =  0 + a = a$ for any real number $a$.
+We call 0 the \textbf{additive identity}.
+
+The number 1 is the identity element for multiplication, which means that
+$a \cdot 1  =  1 \cdot a = a$ for any real number $a$.
+We call 1 the \textbf{multiplicative identity}.
+
+
+
+
+\subsection{Additive inverses and subtraction}
+
+For any real number $a$, the \textbf{additive inverse} of $a$ is the real number $b$ such that $a + b = 0$.
+The additive inverse of $a$ is commonly written $-a$, and called \textbf{negative $a$}. 
+
+Remember that the number $-a$ equals $(-1)\cdot a$. This is important when factoring; for example
+$$\pi^2-\pi=\pi\cdot\pi-\pi=\pi\cdot\pi+(-1)\pi=(\pi-1)\cdot\pi.$$
+ 
+%$$a +  (-1)\cdot a = 1 \cdot a + (-1)\cdot a =  (1 + (-1))a = 0 \cdot a = 0.$$
+%{\color{blue}(Any real number multiplied by $0$ is $0$.)}
+
+%{\color{red}By commutativity $a(-1) = -a$.
+%
+%It now follows that $(-a)b  =-ab$ because 
+%$(-a)b = (-1) \cdot a \cdot b = (-1) \cdot (a b) = -(ab).$
+%Similarly, $a (-b) = -ab$.}
+Using the rules we have accumulated so far, you could now verify that, for any real numbers $a,b$:
+\begin{itemize}
+    \item $a(-1) = -a$,
+    \item $(-a)b = -(ab)$, 
+    \item $a(-b) = -(ab)$,
+\end{itemize}
+all of which are familiar rules.
+
+The additive inverse of $-a$ is $a$ because $(-a) + a = a + (-a) = 0$.
+In other words, $-(-a) = a$.
+
+For example, $4 + (-4) = 0$, so $-4$ is the additive inverse of 4, and  
+4 is the additive inverse of $-4$.
+Since $0 + 0 = 0$, the number 0 is its own additive inverse.
+
+\textbf{Subtraction} can be defined in terms of adding the (additive) inverse. 
+For any real numbers $a$ and $b$, %we define the operation ``$-$'' as:
+$a - b$ is defined to mean $a + (-b)$.
+For example, $7 - 3 = 7 + (-3) = 4$.
+
+For any real numbers $a$ and $b$, the additive inverse of $a-b$ is  $b-a$ because:
+\begin{eqnarray*}
+(a - b) + (b - a) & = & a + (-b) + b + (-a) \\
+& = & (a + (-a)) + (b + (-b))\\
+& = &  0 + 0 = 0
+\end{eqnarray*}
+Therefore, $-(a - b) = (b-a)$. This is often useful when simplifying expressions; for example, $(4-7)+(7-4)=(4-7)-(4-7)=0$.
+
+Multiplication distributes over subtraction because multiplication distributes over addition.
+That is, $a (b - c) = ab - ac$ and $(b - c) a = ba - ca$.
+%{\color{red}The first of these can be obtained from the fact that multiplication distributes over addition and the fact that $a (-c) = -ac$ as follows:
+%$$a (b - c) = a (b + (-c)) = ab + a(-c) = ab + (-ac) = ab - ac.$$
+%The second of these can be similarly obtained from the fact that multiplication distributes over addition and the fact that $(-c)a = -ca$.}
+
+\subsection{Multiplicative inverses and division}
+
+For any \emph{nonzero} real number $a$, the \textbf{multiplicative inverse} of $a$ is the real number $b$
+such that $a \cdot b = 1$.
+The multiplicative inverse of $a$ is commonly written $\frac{1}{a}$, and called the \textbf{reciprocal} of $a$. 
+The reciprocal of $\frac{1}{a}$ equals $a$ because $\frac{1}{a} \cdot a = a \cdot \frac{1}{a} = 1$ for any non-zero
+real number $a$.  
+For example, $4\cdot\frac{1}{4} = 1$, because $\frac{1}{4}$ is the multiplicative inverse of $4$. 
+Since $1 \cdot 1 = 1$, the number 1 is its own multiplicative inverse, that is $1 = \frac{1}{1}$.
+
+The number 0 does not have a reciprocal because $0 \cdot b = 0$ for any real number $b$,
+thus the equation $0 \cdot b = 1$ can never be true.
+
+\textbf{Division} can be defined in terms of of multiplying by the reciprocal.
+For any real numbers $a$ and $b$ such that $b \neq 0$,  $a \div b=a \cdot \frac{1}{b}$.
+The number $\frac{1}{b}$ exists because $b \neq 0$.
+We also write $a \div b$ as $a / b$ or as $\frac{a}{b}$.
+
+\subsection{Practice Problems}
+
+%{\color{red}We need some!}
+\begin{enumerate}
+    \item Evaluate $3 + 6 \cdot (5 + 4) \div 3 - 7$ using the order of operations. %ANSWER: 14
+    \item Evaluate $9 - 50 \div (8 - 3)^2 \cdot 2 + 6$ using the order of operations. %ANSWER: 11
+    \item Evaluate $5 \cdot 8 + 6 \div 6 - 12 ^ 2$  using the order of operations. %ANSWER: -103%Messy order-of-operations question (like those Facebook ``puzzles'')
+    \item Without using a calculator, show that $(36-24)\cdot\left(\frac{\pi}{2} -\frac{\pi}{4}\right) + (112 - 115)\pi = 0$.
+    \item Without using a calculator, show that $7\left(\pi+4\right) + 5\left(\pi+2\right)=12\left(\pi+4\right)-10$.
+    \item Without using a calculator, show that $2+5\sqrt{2}+9=\left(\sqrt{2}+3\right)^2-\sqrt{2}$.
+\end{enumerate}
+
+\subsection{Solutions}
+
+1.  $14 \quad$ 2. $11 \quad$ 3.  $-103$
+
+\newpage
+\section{Fractions}
+When {\bf adding or subtracting fractions,} express them as proportions of a common amount (get a common denominator) and then combine them.
+
+For fractions, $\frac{a}{b}$ and $\frac{c}{d}$, any common multiple of $b$ and $d$ can be used as a common denominator. For example, $bd$ works. 
+
+
+ {\bf Multiplying fractions} corresponds to taking a portion of a portion of a number:  multiply the numerators together and the denominators together. 
+%remember that ``times'' means '``of''.  Thus
+%$\frac{3}{4} \times \frac{5}{9}$ can be read as ``three quarters of five ninths (of one)''.
+%Imagine a whole object divided into nine equal pieces, of which you have five.  Someone
+%wants $\frac{3}{4}$ of what you have, so first you split each of the nine pieces in four equal parts.
+%That means there are now $4 \times 9 = 36$ equal pieces, and you have $4 \times 5 = 20$ of them.
+%Now you give the other person three of the four pieces arising from each of your five.
+%They then have $3 \times 5 = 15$ of the pieces.
+
+ When {\bf dividing fractions}, remember that $ \frac{1}{ c/d} = \frac{d}{c}$, so that $ \frac{a/b}{c/d} =  \frac{a}{b} \cdot \frac{c}{d} $  (i.e. multiply by the reciprocal of the divisor).  So dividing by $\frac{c}{d}$ is the same as multiplying by $\frac{d}{c}$.
+
+\begin{example}
+$ $
+\begin{itemize}
+\item $ \frac{1}{5} + \frac{2}{5} = \frac{1+2}{5}=\frac{3}{5}$
+\item $ \frac{1}{2} + \frac{4}{5} = \frac{1 \cdot 5}{2 \cdot 5}+ \frac{4 \cdot 2}{5 \cdot 2} = \frac{5}{10} + \frac{8}{10} = \frac{13}{10}$
+\item $ \frac{5}{6} - \frac{3}{4} = \frac{5 \cdot 4}{6 \cdot 4} - \frac{3 \cdot 6}{4 \cdot 6} = \frac{20}{24} - \frac{18}{24} = \frac{2}{24} = \frac{1}{12}$
+\item $ \frac{6}{5} \cdot \frac{3}{7} = \frac{6 \cdot 3}{5 \cdot 7} = \frac{18}{35}$
+\item $ \frac{10}{3} \div \frac{7}{8} = \frac{10/3}{7/8}  = \frac{10}{3} \cdot \frac{8}{7} = \frac{10 \cdot 8}{3 \cdot 7} = \frac{80}{21} $
+%\begin{itemize}
+%\item \normalfont Note  $ \frac{10}{3} \div \frac{7}{8} $ can be written as $ \frac{10/3}{7/8} $.
+%\end{itemize}
+\item $ \frac{8}{15} \div \frac{4}{3} = \frac{8}{15} \cdot \frac{3}{4} = \frac{8 \cdot 3}{15 \cdot 4} = \frac{24}{60} = \frac{2}{5} $
+\end{itemize}
+\end{example}
+
+
+Remember that $\frac{a+b}{c}=(a+b)\cdot\frac{1}{c}=a\cdot\frac{1}{c}+b\cdot\frac{1}{c}=\frac{a}{c}+\frac{b}{c}$. For example:
+$\frac{4+\pi}{4}=\frac{4}{4}+\frac{\pi}{4}=1+\frac{\pi}{4}$. This is just the distributive rule, which sometimes leads (as in that example) to some cancellation of factors common to both the numerator and denominator. 
+On the other hand, no cancellation is possible with $\frac{4}{4+\pi}$ because the denominator cannot be factored.
+
+\begin{example}\label{dontcancle}
+(a) Without using a calculator, show that $\frac{4}{4+\pi}=\frac{1}{1+\frac{\pi}{4}}$. (b) Use a calculator to verify that $\frac{4}{4+\pi}\neq 1 + \displaystyle\frac{1}{\frac{\pi}{4}}$ and that $\frac{4}{4+\pi}\neq\frac{1}{1+\pi}$.
+
+\normalfont
+(a) We can factor a $4$ out of the denominator: $\frac{4}{4+\pi}=\frac{4}{4\left(1+\frac{\pi}{4}\right)}=\frac{4}{4}\cdot\frac{1}{1+\frac{\pi}{4}} = \frac{1}{1+\frac{\pi}{4}}$.
+
+(b) $\frac{4}{4+\pi}\approx 0.56$, and $1+\frac{1}{\frac{\pi}{4}}\approx2.27$, and $\frac{1}{1+\pi}\approx0.24$.
+\end{example}
+
+Example~\ref{dontcancle}(b) emphasizes that only factors common to \emph{all terms} in both the numerator and the denominator can be cancelled.
+
+\subsection{Practice Problems}
+
+Evaluate and put the following expressions into the lowest terms:
+\begin{enumerate}
+\item $ \frac{2}{7} + \frac{3}{7} $ 
+\item $ \frac{7}{9} + \frac{5}{6} $ 
+\item $ \frac{1}{4} - \frac{3}{5} $ 
+\item $ \frac{3}{2} \cdot \left(-\frac{5}{15}\right) $ 
+\item $ \frac{27}{16} \div \frac{3}{4} $ 
+\item $\displaystyle \frac{\frac{11}{4} - \frac{5}{6}}{\frac{3}{2}} $ 
+\item Without using a calculator, show that $\frac{3}{6+\pi}=\frac{1}{2+\frac{\pi}{3}}$. %{\color{red}Add one like Example 2}
+\end{enumerate}
+
+
+\subsection{Solutions}
+1. $ \frac{5}{7} $ \quad 2. $ \frac{29}{18} $ \quad 3. $ -\frac{7}{20} $ \quad 4. $ -\frac{1}{2} $ \quad 5. $ \frac{9}{4} $ \quad 6. $ \frac{23}{18} $
+
+\newpage
+\section{Integer Exponents}
+For a non-negative integer $n$:
+\begin{itemize}
+\item The notation $ a^n $ represents $ a $ multiplied by itself $ n $ times. ex: $ 5^3 = 5 \times 5 \times 5$.
+
+\item If $a \neq 0$, then $a^0 = 1$ because $a$ multiplied by itself zero times is a product that has no terms, and a product that has no terms equals $1$.  Note: $0^0$ is not a number; it is an indeterminate form that will be studied in calculus.
+
+
+\item \textbf{Multiplying exponents:} When multiplying powers of the same base, add the exponents, because:  
+$$ a^n  \times a^m = \underbrace{aa\cdots a}_{n\ \mathrm{times}}  \times \underbrace{aa\cdots a}_{m\ \mathrm{times} } 
+= \underbrace{aa\cdots a \times aa\cdots a}_{n+m\ \mathrm{times} } = a^{n+m} $$
+When multiplying exponential expressions of different bases but of the same power, multiply by the bases together and raise it to the exponent, because:
+$$ a^n\times b^n = \underbrace{aa\cdots a}_{n\ \mathrm{times}}  \times \underbrace{bb\cdots b}_{n\ \mathrm{times} } 
+= \underbrace{abab \cdots ab}_{n\ \mathrm{times} } = (ab)^n $$
+
+\item \textbf{Powers of Powers:} When raising a power to another power, multiply the exponents, because: 
+$$ (a^n)^m  =  \underbrace{a^n a^n\cdots a^n}_{m\ \mathrm{times}}= \underbrace{aaaa\cdots aaa \times aaa\cdots aa}_{nm\ \mathrm{times} } =  a^{nm} $$
+\item {\bf Negative exponents} are a shorthand for a power of the reciprocal, and only make sense if the base is not zero. That is, for $n > 0$ and $a \neq 0$, 
+ $$a^{-n} =  \big( a^{-1} \big)^n = \left( \frac{1}{a} \right)^n= \frac{1}{a^n}.$$  Note that  $a^{-1} = \frac{1}{a}.$
+
+\item \textbf{Dividing exponents:} When dividing powers of the same base, subtract the exponents because of the meaning of negative exponents (above): 
+$$ a^n \div a^m = \frac{a^n}{a^m}= a^n\left(\frac{1}{a^m}\right)= a^n \times a^{-m} =  a^{n-m}. $$
+
+
+\item If you have different bases to different powers, sometimes you can combine by factoring. See below.
+\end{itemize}
+
+\bigskip
+%\newpage
+\begin{example}
+$ $
+\begin {itemize} 
+\item $ 6^3 \cdot 6^7 = 6^{3+7} = 6^{10} $
+\item $ 2^4 \cdot 2^7 = 2^{4+7} = 2^{11}. $ \normalfont Notice that $2^{11}$ can arise other ways; for example $ 2^{11} =2^{8+3} = 2^8 \cdot 2^3 $
+\item $ (4^{60})^2 = 4^{60 \times 2} = 4^{120} $
+\item $\frac{1}{343} = \frac{1}{7^3} = 7^{-3} $
+\item $ 9^6 \div 9^2 = 9^{6-2} = 9^{4} $
+\item $ \frac{3^{-4}}{3^{-5}} = 3^{-4- (-5 )} = 3^1 = 3 $
+\item $ 4^3 5^3 =(4 \times 5)^3 = 20^{3} $
+\item $ 2^5 \cdot 8^6 = 2^5 \cdot (2^3)^6 = 2^5 \cdot 2^{18} = 2^{23} $
+\item $ 3^2 \cdot 9^{-4} = 3^2 \cdot (3^2)^{-4} = 3^2 \cdot (3^{-8}) = 3^{-6} $  
+\item $ (35)^2 \cdot 7^9 = (5\cdot 7)^2 \cdot 7^{9} = 5^2 \cdot 7^{11} $ 
+\item $ 12^3 \cdot 18^4 = (2\cdot 6)^3 \cdot (3\cdot 6)^4 = 2^3\cdot 6^3\cdot 3^4 \cdot 6^4 
+= 2^3\cdot 3^4 \cdot 6^7 = 3\cdot 6^3\cdot 6^7= 3\cdot 6^{10}$
+\end{itemize}
+\end{example}
+
+
+\subsection{Practice Problems}
+Use the rules of exponents to find an expression equivalent to the following: 
+\begin{enumerate}
+
+\item $ z^4 \cdot z^{-5} $ 
+\item $ (9^3)^4 $ 
+\item $ (2^{-2})^{-4} $ 
+\item $ \frac{q^5}{q^2}  $ 
+\item $ (-4)^3 \cdot 5^3 $ 
+%\item $ \frac{(p^6)^\frac{1}{2}}{p^3}  $ \\
+\end{enumerate}
+
+\subsection{Solutions}%. There are other correct expressions.}
+
+1. $ z^{-1} \quad$ 2. $ 9^{12} = 3^{24}\quad$ 3. $ 2^8\quad $ 4. $ q^3 \quad $ 5. $ (-20)^3 = - (20^3) = -20^3 $\\
+In each case there are other correct solutions.
+%\item $ 1 $
+
+\newpage
+\section{Intervals on the real line}
+
+In what follows, we assume that $x$ and $y$ are real numbers.
+
+
+\noindent \textbf{Set builder notation} is a way of describing sets of real numbers that satisfy some condition:\\
+$\{ x:$ "some condition" $\}$ describes the set of all real numbers for which the condition is true.  
+
+For example:
+$ \{ x : -2 \leq x \leq 5 \}$ represents the set of all real numbers that are greater than or equal to $-2$ and less than or equal to $5$.
+This set is often described using interval notation; see below.
+
+
+\noindent \textbf{Interval Notation}.  Intervals of numbers on the real line are denoted using brackets.  Different types of brackets have different meanings.
+
+\begin{itemize}
+\item $\big[$ and \big] are used to indicate that the endpoints of the interval are included. These correspond to $\leq$ and $\geq$ when the interval is described using inequalities.
+
+For example, $ \big[ a, b \big] = \{ x: a\leq x\leq b\} $ . Therefore $ \big[ 0, 9 \big] =  \{ x : 0 \leq x \leq 9 \}$.  
+This set contains numbers such as 0, 4, $ \pi$ , 8.3759838459, $ \frac{1}{6} $, 9, etc. There are infinitely many members of this set. 
+
+
+
+\item $\big($ and \big) are used to indicate that the endpoints of the interval are \emph{not} included. These correspond to $<$ and $>$ when the interval is described using inequalities.
+
+For example, $ \big( a, b \big) = \{ x: a < x < b\} $ .  Therefore,
+$ \big( 2, 5 \big) $ = $ \{ x : 2  \ \textless \ x \ \textless\  5 \}$. 
+This set contains numbers such as 2.0000000001, 4, $ \pi$, $ \frac{7}{3} $ etc. There are also infinitely many members of this set.
+
+
+\item The two types of brackets discussed above can be used together. For example,\\
+ $ \big[ -3, 7 \big) $ = $ \{ x : -3  \leq x \ \textless \  7 \}$.
+This set also has infinitely members, and in particular contains $-3$ but not 7.
+
+
+\item \textbf{Note:} Since infinity is not a real number, we must always use an open bracket for infinity or negative infinity. ex $ \big ( -\infty , 4 \big ]$.
+\end{itemize}
+
+
+
+\textbf{Warning:} It is important to remember that not all real numbers are integers. For example, the set $ \big [ 2, 3 \big ]$ is \emph{not} equal to $ \big ( 1, 4 \big )$ -- there are many numbers, such as $1.3$, that are in the interval $(1,4)$ but are not in the interval $[2,3]$.
+
+\textbf{Combining intervals}. %%%Jane added this on Sunday Sep 16
+The set $\{x : 2 \ \textless \ x \ \textless \ 5 \mbox{ or } 6 \ \textless \ x \ \textless \ 9\}$ is the set of all real numbers that are in the interval $(2,5)$ \emph{or} are in the interval $(6,9)$. We use the $\cup$  symbol to signify the \emph{union} of two sets. For example, 
+$\{x : 2 \ \textless \ x \ \textless \ 5 \mbox{ or } 6 \ \textless \ x \ \textless \ 9\}=(2,5)\cup(6,10)$, and \\
+$\{x : x\neq -4 \} = (-\infty,-4)\cup(-4,\infty)$.
+
+
+More generally, if $A$ and $B$ are two sets of real numbers then their \textbf{union}, denoted $A \cup B$, is the set of all numbers that are in $A$, $B$, or both. Their \textbf{intersection}, denoted $A \cap B$, is the set of all numbers that are in both $A$ and $B$.
+
+For example, $(-\infty, 2) \cap [-1, 5]$ is the set of all real numbers $x$ that are less than $2$ \emph{and} satisfy $-1\leq x \leq 5$. That is, $(-\infty, 2) \cap [-1,5]=[-1,2)$.
+Another way to think about this set is as the solution set to the {\bf system of inequalities} 
+(or {\bf compound inequality}) $x < 2,\ \ x \geq -1,\ \ x \leq 5$.
+
+\subsection{Practice Problems}
+
+Write the following expressions in set builder notation or interval notation: 
+\begin{enumerate}
+\item $ \big[ -1, 10 \big] $
+\item $ \{ x : -7  \leq x \ \textless \  5 \}$
+\item $ \big[ 7, 28 \big) $
+\item$ \{ x : 2  < x < 7 \}$
+\item $ \big( -8, 5 \big) $
+\item $ \{ x : 0 < x \leq 6 \}$
+\item $\{x : x > -3\}$%%%Jane added this on Sunday Sep 16
+\item $(-\infty,2)\cup(2,8)\cup(8,\infty)$%%%Jane added this on Sunday Sep 16
+
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  $ \{ x : -1 \leq x \leq 10 \}$  \  \quad
+2.  $ \big[ -7, 5 \big) $   \ \quad
+3.  $ \{ x : 7 \leq x < 28 \}$  \  \quad
+4. $ \big( 2, 7 \big) $ \quad
+5.  $ \{ x : -8 < x < 5 \}$  \\
+6. $ \big( 0, 6 \big] $  \ \quad
+7. $(-3,\infty)$ \ \quad%%%Jane added this on Sunday Sep 16
+8. $\{x : x\neq 2 \mbox{ and } x\neq 8\}$ \ \quad%%%Jane added this on Sunday Sep 16
+
+\newpage
+\section{Graphing intervals on the real line}%Former title: Inequalities on the real line}
+
+We can represent intervals of real numbers graphically on the real line by shading in the relevant portions. A \textbf{filled-in circle} indicates that an endpoint is included, an \textbf{empty circle} indicates that the endpoint is not included, and an \textbf{arrow} indicates that the interval extends forever in that direction. When an interval is expressed in the form $\{x : x>a\}$, $\{x : x<a\}$, $\{x : x\geq a\}$, or $\{x : x\leq a\}$, this is straightforward.
+
+\begin{example} \normalfont
+$ $
+
+The interval $(-\infty,-3]=\{x: x \leq -3\}$, is represented by the following graph. 
+
+\begin{center}
+
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[<-,very thick] (-5.44,0) -- (-3,0);
+\filldraw[fill=black,draw=black] (-3,0) circle (.09cm);
+
+\end{tikzpicture}
+
+\end{center}
+
+The filled-in circle at the point $x=-3$ indicates that $-3$ is included in the interval. The arrow indicates that all real numbers less than $-3$ are also included.
+
+
+The interval $\{ x: x > 2 \}$ is represented by the following graph.
+\begin{center}
+
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (1.92,0) -- (5.44,0);
+\filldraw[fill=white,draw=black] (2,0) circle (.09cm); %%% Jane added this to make the crosshair effect go away
+\draw[very thick] (2.08,0) -- (5.44,0);
+
+\end{tikzpicture}
+
+\end{center}
+
+The empty circle at the point $x=2$ indicates that $2$ is not included in the interval, and the arrow indicates that all real numbers greater than $2$ are included.
+\end{example}
+
+\textbf{Dividing by a negative number}. You may recall that when dividing both sides of an inequality by a negative number, the inequality switches direction. This is because dividing by a negative number corresponds to subtraction, as for example in: 
+    
+    $$\begin{array}{rcl}
+    -x &>& 2\\
+    -x+x & > & 2 + x \\
+    0 & > & 2+x\\
+    0 - 2 & > & -2+2+x\\
+    -2 & > & x.
+    \end{array}$$
+Thus, $-x>2$ is equivalent to $x<-2$. 
+
+Graphically, the interval $\{x : -x > 2\}$ is the mirror image of the interval $\{x:x>-2\}$ on the number line.
+
+\begin{center}
+
+\begin{tikzpicture}
+\begin{scope}[yshift=1cm]
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (2,0) -- (-5.44,0);
+\filldraw[fill=white,draw=black] (2,0) circle (.09cm); %%% Jane added this to make the crosshair effect go away
+\node[right] at (5.5, 0) {$\{x: -x > 2\} = \{x: x<-2\}$};
+\end{scope}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (-2,0) -- (5.44,0);
+\filldraw[fill=white,draw=black] (-2,0) circle (.09cm); %%% Jane added this to make the crosshair effect go away
+\node[right] at (5.5, 0) {$\{x: x > -2\}$};
+\end{tikzpicture}
+
+\end{center}
+
+\begin{example} Represent $\{x: -3x < 9\}$ graphically. 
+
+\normalfont 
+In this example, the inequality is not yet expressed in the form $x<a$ or $x>a$, and so we need first to rewrite the inequality. Dividing both sides by $-3$, remembering that this switches the direction of the inequality, gives us $\{x : x > -3\}$:
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (-3.08,0) -- (5.44,0);
+\filldraw[fill=white,draw=black] (-3,0) circle (.09cm); %%% Jane added this to make the crosshair effect go away
+\draw[very thick] (-2.92,0) -- (5.44,0);
+
+\end{tikzpicture}
+
+\end{center}
+
+\end{example}
+
+%%%Jane moved this portion to the previous submodule.
+%Sometimes we need to combine intervals. We are going to define union and intersection. Let $A$ and $B$ be sets of numbers.
+%\item \textbf{Union:} the set of number in $A$, $B$, or both. We denote the union of $A$ and $B$, $A \cup B$.
+%\item \textbf{Intersection:} the set of number in both $A$ and $B$. We denote the intersection $A \cap B$.
+
+\begin{example} Representing unions and intersections graphically. 
+
+\normalfont The set $ ( - \infty, 2 ) \cup \big[ 4, \infty ) $ is the union of two intervals, both of which we can represent graphically. The union is just represented by drawing both:
+
+\begin{center}
+
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (4,0) -- (5.44,0);
+\filldraw[fill=black,draw=black] (4,0) circle (.09cm);
+
+\draw[very thick, ->] (2,0) -- (-5.44,0);
+\filldraw[fill=white,draw=black] (2,0) circle (.09cm);
+
+\end{tikzpicture}
+
+\end{center}
+
+The set $ ( - \infty, 1 ) \cap \big[ 0, \infty ) $ is the intersection of two intervals. To represent this set graphically, we draw only the portion that is common to both:
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[yshift=2cm]
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] {$\x$};
+
+\draw[very thick,->] (1,0) -- (-5.44,0);
+
+\filldraw[fill=white, draw=black] (1,0) circle (.09cm);
+
+\node[right] at (5.5,0) {The interval $(-\infty,1)$};
+
+\end{scope}
+\begin{scope}[yshift=1cm]
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (0,0) -- (5.44,0);
+\filldraw[fill=black, draw=black] (0,0) circle (.09cm);
+          
+\node[right] at (5.5,0) {The interval $[0,\infty)$};
+\end{scope}
+
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[*-o] (-0.08,0) -- (1.08,0);
+\draw[very thick] (-0.08,0) -- (0.92,0);
+\filldraw[fill=white, draw=black] (1,0) circle (.09cm);
+
+\node[right] at (5.5,0) {The set $(-\infty,1)\cap [0,\infty)$};
+
+\end{tikzpicture}
+\end{center}
+
+Notice that it is easy to determine from the graph that $(-\infty,1)\cap [0,\infty)=[0,1)$.
+
+\end{example}
+
+\newpage
+\subsection{Practice Problems}
+
+Represent each of the following sets graphically on a number line:
+\begin{enumerate}
+\item $ x\neq 6 $ 
+\item $-5x \textless 10$ 
+\item $ ( - \infty, 3 ) \cup \big[ 7, \infty ) $
+\item $ ( - \infty, 4 ) \cap \big[ -1, \infty ) $
+\item $ ( - \infty, 1 ) \cap \big[ 5, \infty ) $
+\end{enumerate}
+
+\subsection{Solutions} 
+
+
+\begin{enumerate}
+\item 
+
+\begin{tikzpicture}
+\draw[latex-latex] (-1.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {-1,0,1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-1,0,1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (6,0) -- (8.44,0);
+
+\draw[very thick,->] (6,0) -- (-1.44,0);
+\filldraw[fill=white] (6,0) circle (.09cm);
+
+\end{tikzpicture} \\
+
+\item
+
+\begin{tikzpicture}
+\draw[latex-latex] (-1.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {-1,0,1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-1,0,1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\draw[very thick,->] (2,0) -- (8.44,0);
+\filldraw[fill=white] (2,0) circle (.09cm);
+
+\end{tikzpicture} \\
+
+
+\item 
+
+\begin{tikzpicture}
+\draw[latex-latex] (-1.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {-1,0,1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-1,0,1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (7,0) -- (8.44,0);
+\filldraw[fill=black] (7,0) circle (.09cm);
+
+\draw[very thick,->] (3,0) -- (-1.44,0);
+\filldraw[fill=white] (3,0) circle (.09cm);
+
+\end{tikzpicture} \\
+
+\item
+
+\begin{tikzpicture}
+\draw[latex-latex] (-1.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {-1,0,1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-1,0,1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[*-o] (-1.08,0) -- (4.08,0);
+\draw[very thick] (-1,0) -- (4,0);
+\filldraw[fill=black] (-1,0) circle (.09cm);
+\filldraw[fill=white] (4,0) circle (.09cm);
+
+\end{tikzpicture} \\
+
+\item
+
+\begin{tikzpicture}
+\draw[latex-latex] (-1.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {-1,0,1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-1,0,1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\end{tikzpicture} \\
+
+\end{enumerate}
+
+\chapter{Module 2}
+
+\section{Functions}
+
+%\textbf{Definition:}
+
+Let $D$ be a set of real numbers. Any way of associating exactly one real number with each element of $D$ is called a \textbf{function}. The set $D$ is called the function's \textbf{domain}. 
+For any $x$ in $D$, we call $f(x)$ the \textbf{value of $f$ at $x$}. The set $\{f(x) : x \mbox{ is in } D\}
+= \{y: y = f(x) \mbox{ for some } $x$ \mbox{ in } D\}$ is called the function's \textbf{range} -- that is, the range of $f$ is the set of all numbers that occur as values of $f$. %%%Jane's rewrite
+ 
+%\begin{itemize}
+%\item 
+When the function $f$ is described by giving a formula, then for any number in the domain the value of $f$ at that number is obtained by substituting that number for the variable in the formula.
+
+%The ``$f(x)$" represents ``$f$ is a function of $x$", meaning whatever value takes the place of $x$ will be substituted into $x$ for the equation. %Jane isn't sure how to rewrite this; what was the intention? (I'm also nervous that Gary might have already edited this section yesterday and just didn't re-upload it; maybe I should stop working on this bit.)
+For example, if the function $f$ is described by  $ f(x) = 5x^2 - x +1 $ and the domain is the set of all real numbers, $\mathbb{R}$, 
+then to find $ f(2) $ we substitute 2 into the formula for $x$, as in: 
+\[f(2) = 5(2)^2 - (2) + 1 = 5 \cdot 4 - 2 + 1 = 20 - 2 + 1 = 19. \] 
+Therefore, $ f(2) = 19 $.
+
+\textbf{Assumed domains}. When the domain $D$ is not explicitly given in the description of the function, we assume it is the largest collection of numbers for which the function makes sense (is defined).  %Some authors call this the ``natural domain''.
+
+\textbf{Finding the range}. When finding the range of a function that's described by an expression, there are usually two steps involved.  The first step is to determine a set of possible values the function could take.  The second step is to verify that each one of these is actually achieved for at least one $x$ in the domain.
+
+
+
+%\item \textbf{Note:} The Equals sign ( = ) means whatever is on the left hand side is the same as what is on the right hand side. Do not use it as a way to say different lines of your work are equal to each other.
+%\end{itemize} 
+
+
+\begin{example}
+\normalfont For each function, find the assumed domain $D$, that is, the largest collection of numbers for which the function is defined.  In addition, find the range of the function.
+\begin{itemize}
+ \item $ f(x) = x^2 -5$.\\
+The expression $x^2 - 5$ is defined for all real numbers, so assumed domain is the set of all real numbers, $\mathbb{R}$. 
+
+Since, for every real number $x$, the quantity $x^2$ is at least zero, 
+$x^2-5$ is at least $0-5 = -5$. 
+Therefore the possible numbers that can be in the range are the real numbers which are at least $-5$.  
+Take any $y \geq -5$.  Then 
+$y = x^2 - 5$ if and only if $y+5 = x^2$, and $y + 5 \geq 0$ so $x = \pm \sqrt{y + 5}$.
+Hence there is always at least one number $x$ the domain such that $f(x) = y$, 
+so  the range is $ \{ y : y \geq -5 \} $.
+
+\item $f(x) = \sqrt{x-5} + 3 $.\\
+The expression $\sqrt{x-5} + 3 $ involves a square root, and the square root function 
+only makes sense for non-negative numbers (it is only defined for non-negative numbers).
+That means we need to have $x -5 \geq 0$, or equivalently $x \geq 5$.
+There are no other restrictions on the values of $x$ that can be used.
+Therefore, the domain is 
+$ \{ x : x \geq 5\} $. 
+
+Since for every $x \geq 5$ the quantity $\sqrt{x-5} \geq 0$,
+we know that $\sqrt{x-5} + 3 \geq 0+3 = 3$.
+Therefore the possible numbers that can be in the range are the real numbers which are at least $3$.  
+Take any $y \geq 3$.
+Then $y = \sqrt{x-5} + 3$ if and only if $y - 3 = \sqrt{x-5}$, which implies $(y-3)^2 = x-5$.
+Thus, if $f(x) = y$ then $x = (y-3)^2 + 5$.
+Since $y \geq 3$, the quantity $(y-3)^2 + 5$ is in the domain.
+Furthermore, if $x = (y-3)^2 + 5$, then 
+$$f(x) = f((y-3)^2 + 5) = \sqrt{(y-3)^2 + 5 -5} + 3 = \sqrt{(y-3)^2} + 3 = |y-3| + 3  = (y-3) + 3 = y.$$
+We've used $|y-3| = y-3$ because $y - 3 \geq 0$. 
+
+Therefore,  the range is $ \{ y : y \geq 3 \} $.
+ 
+\end{itemize}
+\end{example}
+
+A function can be defined by an equation.  
+For example, for the equation $y = 10x - 7$, once we choose a value for $x$, then 
+$y$ is uniquely determined:
+as in the definition of a function, the equation $y = 10x - 7$ associates exactly one number $y$ with 
+each number $x$.
+
+\begin{example}
+Does the equation $x=y^2+5$ define $y$ as a function of $x$? 
+\normalfont
+
+No.  For example, when $x=6$, 
+the statements $6 = (-1)^2 + 5$ and $6 = 1^2 + 5$ are both true.
+Thus this equation associates two values of $y$, namely $\pm 1$, with 
+$x = 6$, and so it does not define $y$ as a function of $x$.
+\end{example}
+
+\subsection{Practice Problems}
+\begin{enumerate}
+\item Using $ f(x) = 2x^2 - x +1$, find: 
+\begin{enumerate}
+\item $f(3)$ 
+\item $f(x)$ when $ x = 4$ 
+\item $f(-3)$ 
+\end{enumerate}
+\item Using $ f(x) = x^3 - 3x^2 +5$, find: 
+\begin{enumerate}
+\item $f(0)$ 
+\item $f(3)$ 
+\item $f(-3)$ 
+\end{enumerate}
+
+\item Let $f(x) = 10-x^2$.  Find:
+\begin{enumerate}
+\item The (assumed) domain of $f$.
+\item The range of $f$.
+\end{enumerate}
+
+\item Let $f(x) =  2 - \sqrt{x^2 - 25}$.  Find:
+\begin{enumerate}
+\item The (assumed) domain of $f$.
+\item The range of $f$.
+\end{enumerate}
+
+
+\item Which of the following equations define $y$ as a function of $x$? 
+\begin{enumerate}
+\item $y=x^2+8$
+\item $x^2-y^2=16$
+\item $y=5$
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Solutions}
+\begin{enumerate}
+\item 
+\begin{enumerate}
+\item $16$ 
+\item $29$
+\item $22$ 
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item $5$ 
+\item $5$
+\item $-49$ 
+\end{enumerate}
+
+\item 
+\begin{enumerate}
+\item $\mathbb{R}$
+\item $\{y: y \leq 10\}$
+\end{enumerate}
+
+\item 
+\begin{enumerate}
+\item $(-\infty, -5] \cup [5, \infty)$
+\item $\{y: y \leq 2\}$
+\end{enumerate}
+
+
+\item
+\begin{enumerate}
+\item This equation does define $y$ as a function of $x$.
+\item This equation does not define $y$ as a function of $x$.
+\item This equation does define $y$ as a function of $x$.
+\end{enumerate}
+\end{enumerate}
+
+\newpage
+\section{Finding roots}
+
+A \textbf{root} of a function $f$ is a number $x$ such that $f(x) = 0$. Roots are also called \textbf{zeroes}.
+Some functions, such as $f(x) = x^2+1$, don't have roots that are real numbers.  If $x=a$ is a root of the function $f(x)$, then the point $(a,0)$ is an $x$-intercept of the graph $y=f(x)$. 
+
+\begin{example} Find the roots of $ f(x) = 3x -2 $.
+
+\normalfont
+Notice that $f(x)=0$ exactly if $3x-2=0$, and it is straightforward to solve this equation for $x$: 
+    \[
+    \begin{array}{rcl}
+    3x-2 & = & 0\\
+    3x  & = & 2\\
+    x   & = &  \frac{2}{3} .
+    \end{array}
+    \]
+    Therefore $x = \frac{2}{3}$ is the only root of $f(x)$.
+\end{example}
+
+
+If $p(x)$ is a polynomial and $p(a)=0$ then $(x-a)$ is a factor of $p(x)$, so we can write $p(x) = (x-a)q(x)$ for some polynomial $q(x)$.
+Conversely, if $p(x)=(x-a)q(x)$ for some polynomial $q(x)$ then $p(x)$ is a polynomial and $p(a)=0$.
+ In order to find roots of a polynomial, it is therefore useful to be able to factor it -- and to factor a polynomial it is useful to know one or more of its roots.
+
+%\textbf{Rules:} %%%Really more like `advice'. Also only really one piece of advice: know the quadratic formula, and use it when it's helpful.
+%\begin{itemize}
+%\item When you are given a function in the form of a formula, solve $f(x) =0$.
+%\item If the expression is a quadratic, then you can factor or you can use the quadratic formula.
+%\item \textbf{Quadratic formula:} When you have a function of the form $ y = ax^2 + bx + c $, the quadratic formula, $ x = \frac{-b \pm \sqrt{b^2-4ac}}{2a} $, gives the zeroes.  You must memorize this formula.
+%\item Use the Quadratic formula when it is not easy to see the result. If it is easier to do, factor the result. ex. $ x^2 - x-12 = (x-4)(x+3) $ which means that $ x = 4 $ or $x = -3$.
+%\end{itemize}
+
+It is not always easy to factor a higher-degree polynomial, but using the quadratic formula you can factor any quadratic polynomial. 
+If $p(x) = ax^2 + bx + c$, and $a \neq 0$,  then the real roots of $p$ are $\frac{-b + \sqrt{b^2-4ac}}{2a}$ and $\frac{-b - \sqrt{b^2-4ac}}{2a}$, provided these are real numbers. 
+If $b^2-4ac=0$ then there is only one root, because $\frac{-b + \sqrt{b^2-4ac}}{2a}=\frac{-b - \sqrt{b^2-4ac}}{2a}=\frac{-b}{2a}$. If $b^2-4ac<0$ then there are no real roots, because $\sqrt{b^2-4ac}$ is not a real number.
+
+
+
+\begin{example} Find the roots of $ f(x) = 3x^2 -7x +4 $.
+
+\normalfont 
+Again, $f(x)=0$ exactly when $3x^2-7x+4=0$. This time we cannot immediately solve the equation for $x$, but we can factor the quadratic: $3x^2-7x+4 = (3x-4)(x-1)$. Now, $(3x-4)(x-1)=0$ if and only if $(3x-4)=0$ or $(x-1)=0$, i.e. when 
+$x =\frac{4}{3}$ or $x=1$.
+
+These two roots correspond to factors of the original polynomial: $$3x^2-7x+4= (3x-4)(x-1)=3\left(x-\frac{4}{3}\right)(x-1).$$ 
+
+\end{example}
+
+\begin{example} Find the roots of $f(x)= x^2-6x+7$.
+
+\normalfont
+
+This quadratic does not factor in an obvious way (because, at it will turn out, its roots are not rational). This time we should use the quadratic formula to find the roots:
+
+    \[
+    \begin{array}{rcl}
+    x = \frac{-b\pm\sqrt{b^2-4ac}}{2a}  &=& \frac{-(-6)\pm\sqrt{(-6)^2-4(1)(7)}}{2(1)}\\
+                                &=& \frac{6\pm\sqrt{36-28}}{2}\\
+                                &=& \frac{6\pm\sqrt{8}}{2}\\
+                                &=& \frac{6\pm2\sqrt{2}}{2}\\
+                                &=& 3\pm \sqrt{2},
+    \end{array}
+    \]
+so the roots are $3+\sqrt{2}$ and $3-\sqrt{2}$. 
+
+You can check this answer by verifying that $f\left(3+\sqrt{2}\right) = 0$ and $f\left(3-\sqrt{2}\right) = 0$.
+
+These two roots correspond to factors of the original polynomial: $$x^2-6x+7 = \left(x-\left(3-\sqrt{2}\right)\right)\left(x-\left(3+\sqrt{2}\right)\right).$$ Multiplying out  the factored form is another way to verify the answer.
+
+\end{example}
+
+
+The next two examples involve functions which are not polynomials.
+
+\begin{example} Find the roots of $ f(x) = 1-2^x $.
+
+\normalfont
+
+Although we can not easily factor $1-2^x$, we can still think about the values of $x$ at which $f(x)=0$.
+Notice that $1-2^x=0$ if and only if $1= 2^x$. The only time $2^x$ is equal to 1 is when $x=0$, and so the only root of $f(x)$ is $x=0$.
+Because $f(x)$ is not a polynomial, it is not possible to write it in a factored form as we did in the previous examples.
+
+\end{example}
+
+\begin{example} Find the roots of $ f(x) = \sqrt{x-1} $.
+
+\normalfont
+
+If $0=\sqrt{x-1}$ then $0^2=x-1$, so $0=x-1$. Therefore, $x=1$ is the only possible root of $f(x)$, and it is a root of $f(x)$ because $f(1) = 0$. 
+
+\end{example}
+
+We will find roots of other types of functions later on. 
+
+\subsection{Practice Problems}
+
+Find the roots of the following functions:
+\begin{enumerate}
+\item $ f(x)=3x^2+5x+2 $ 
+\item $f(x)= x^2+5x+2 $ 
+\item $f(x)= \sqrt{x+2} -x +4 $ 
+\item $f(x)=(x+5)^2 +(2x-7)^2-82 $ 
+\item $f(x)= x^3 + x^2 - 2x$
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  $-\frac{2}{3}, -1 $ \  \quad
+2.  $ x=\frac{-5 + \sqrt{17}}{2}, \frac{-5 - \sqrt{17}}{2}$ \ \quad
+3.  $x=2,7 $ \  \quad
+4.  $ x=-\frac{2}{5},4 $ \ \quad
+5. $x=0,1,-2 $ \ \quad
+
+\newpage
+\section{Fractions involving a variable}
+In this section, we will discuss fractions with a variable in the numerator, the denominator, or both. 
+These fractions are really just functions, and as with all functions we need to restrict the values that the variable can take so that the function is defined.
+For example, $\frac{1}{x}$ is undefined for $x=0$. 
+
+\textbf{Addition}, \textbf{subtraction}, \textbf{multiplication}, and \textbf{division} of fractions that involve a variable are all done in the same way they were with real numbers, except that, in addition to the restrictions from above, we also need to restrict the values that the variable can take so that the operations are defined as well.
+For example, $\frac{1}{x}$ and  $\frac{x+2}{x-1}$ are defined only for $x\neq0,1$, and $\frac{x+2}{x-1}=0$ for $x=-2$, so $\frac{1}{x}\div\frac{x+2}{x-1}$ only makes sense for $x\neq-2,0,1$.
+
+%The first step would be to factor any polynomial when possible. Then follow the similar rules as before:
+%\begin{itemize}
+%\item When {\bf adding, subtracting, and multiplying fractions with variables,} we do so as before. 
+%\item When a variable occurs in the divisor of a fraction, the fraction might not make sense for all values. We must indicate that  result as a {\bf non-permissible value} by writing something similar to $ x \neq 2$
+%\item When a variable in the divisor is cancelled out, the collection of numbers that make sense changes. 
+%
+%\end{itemize}
+%
+
+\begin{example}
+Compute and write the answer in lowest terms.
+\begin{itemize}
+\item $ \frac{x+4}{x-3} + \frac{2x+8}{x-3} 
+    = \frac{x+4+2x+8}{x-3}
+    =\frac{3x+12}{x-3}
+    =\frac{3(x+4)}{x-3}$.
+
+\item $ \frac{1}{x-2} + \frac{4}{x-5} 
+    = \frac{1 \cdot (x-5)}{(x-2) \cdot (x-5)}+ \frac{4\cdot (x-2)}{(x-5) \cdot (x-2)} 
+    = \frac{x-5}{(x-2) (x-5)} + \frac{4x-8}{(x-5) (x-2)}
+    = \frac{x-5+4x-8}{(x-5) (x-2)}
+    = \frac{5x-13}{(x-5) (x-2)}$.
+
+\item $ \frac{2}{x+5} - \frac{4}{x-6} 
+    = \frac{2 \cdot (x-6)}{(x+5) \cdot (x-6)} - \frac{4 \cdot (x+5)}{(x-6) \cdot (x+5)} 
+    = \frac{2x-12}{(x+5)(x-6)} - \frac{4x+20}{(x+5)(x+6)} 
+    = \frac{2x-12 - (4x+20)}{(x+5)(x+6)} 
+    = \frac{-2x-32}{(x+5)(x+6)} \\
+    = \frac{-2(x+16)}{(x+5)(x+6)}$.
+    
+\end{itemize}
+\end{example}
+
+Sometimes when common factors are cancelled, the collection of vales for which the expression makes sense seems to change. 
+It shouldn't.
+For example $\frac{2x}{x(x-1)}$ is defined for all real numbers $x \neq 0, 1$,
+but $\frac{2}{(x-1)}$ is defined for all real numbers $x \neq 1$.  
+Since two expressions can only be equal for values of $x$ where they are both defined, in this case
+we can only say $\frac{2x}{x(x-1)} = \frac{2}{(x-1)}$ if $x$ is restricted to be neither 0 nor 1.
+
+\begin{example}
+Compute  $ \frac{5x+9}{4x+16} \cdot \frac{9x+36}{2x-3}$.  Write the answer in lowest terms.
+
+\normalfont 
+It is clear that we need $x \neq -4$ for the first fraction to
+be defined, and $x \neq \frac{3}{2}$ for the second fraction to be defined.  Now:
+\begin{eqnarray*}
+\frac{5x+9}{4x+16} \cdot \frac{9x+36}{2x-3} &=& \frac{5x+9}{4(x+4)} \cdot \frac{9(x+4)}{2x-3} \\
+    &=& \frac{(5x+9)9(x+4)}{4(x+4)(2x-3)} \\
+    &=&  \frac{9(5x+9)}{ 4(2x-3)}, \quad x\neq -4.
+\end{eqnarray*}
+We noted the restriction $x \neq -4$ when the factor $(x+4)$ was cancelled because, although it is not required for the final fraction to be defined,
+ it is required so that all expressions involved in the equation are defined for the same set of values.
+\end{example}
+
+\begin{example}
+Compute and write the answer in lowest terms.
+\begin{itemize}
+
+
+\item $ \frac{15x-5}{8x-4} \div \frac{10x+25}{6x-3} 
+    = \frac{15x-5}{8x-4}  \cdot \frac{6x-3}{10x+25} 
+    = \frac{5(3x-1)}{4(2x-1)} \cdot \frac{3(2x-1)}{5(2x+1)} 
+    = \frac{5(3x-1)3(2x-1)}{4(2x-1)5(2x+1)} 
+    = \frac{3(3x-1)}{4(2x+1)},\quad x \neq \frac{1}{2} $.
+
+\item $ \frac{4}{x^2+3x+2} + \frac{5}{x+2} 
+    = \frac{4}{(x+2)(x+1)} + \frac{5}{x+2} 
+    = \frac{4}{(x+2)(x+1)} + \frac{5(x+1)}{(x+2)(x+1)} 
+    = \frac{4 +5(x+1)}{(x+2)(x+1)}  \\
+    = \frac{4 +5x+5}{(x+2)(x+1)} 
+    = \frac{5x+9}{(x+2)(x+1)}  $.
+\end{itemize}
+\end{example}
+
+
+\subsection{Practice Problems}
+
+Write the following expressions in lowest terms:
+\begin{enumerate}
+\item $ \frac{3}{x+6} + \frac{8}{x+6} $ 
+\item $ \frac{10x-3}{2x+5} + \frac{7x-4}{2x+5} $ 
+\item $ \frac{5}{x+3} - \frac{8}{2x+6} $  
+\item $ \frac{x^2 -1}{x^2-x} \div \frac{3x^2 +x -2}{3x^2-17x+10}  $ 
+\item $ \frac{x+3}{5x-2} \cdot \frac{2x+1}{x-3}   $ 
+\end{enumerate}
+
+\subsection{Solutions} 
+\begin{enumerate}
+\item  $ \frac{11}{x+6} $  \  \quad
+\item  $ \frac{17x-7}{2x+5} $ \ \quad
+\item  $  \frac{1}{x+3} $ \  \quad
+\item  $\frac{x-5}{x}, x \neq -1, \frac{2}{3}, 1, 5$ \ \quad 
+\item $ \frac{(x+3)  (2x+1)}{ (5x-2) (x-3)}$ \ \quad
+\end{enumerate}
+
+\newpage
+\section{Exponents $\frac{1}{n}$}
+
+For a positive integer $n$, a real number $y$ is an {\bf n-th root of $x$} if $y^n=x$. 
+
+If $n$ is odd, every real number $x$ has exactly one $n$-th root. 
+
+If $n$ is even, a real number $x$ has no $n$-th root when $x<0$, exactly one $n$-th root when $x=0$, and exactly two $n$-th roots when $x>0$. If $x$ has two $n$-th roots, one is positive and the other is its negative. 
+
+The symbol $\sqrt[n]{x}$ is defined to be the $n$-th root of $x$ when $n$ is odd, or the non-negative $n$-th root of $x$, if one exists, when $n$ is even. 
+
+Notice that if $n$ is odd, $\sqrt[n]{x}$ exists and has the same sign as $x$.
+
+\begin{example}
+$ $
+\begin{itemize}
+\item $ \sqrt[3]{64} = 4$
+\item $\sqrt[3]{-64} = -4$
+\item $\sqrt[2]{64} = 8$
+\item $-\sqrt[2]{64}  = (-1) \sqrt[2]{64} =-8 $ 
+\item $\sqrt[2]{-64} \quad\textnormal{ is not defined.}$
+
+\end{itemize}
+\end{example}
+The expression $x^\frac{1}{n}$ is just another way of writing $\sqrt[n]{x}$. 
+Notice that if $x^\frac{1}{n}$ is defined, then  $\left(x^\frac{1}{n}\right)^n=x$. 
+
+If $n$ is even and $x$ is non-negative, 
+then $(x^n)^\frac{1}{n} = x$, because $x^n$ is non-negative and $(x^n)^\frac{1}{n}$ is the non-negative $n$-th root of $x^n$. 
+If $n$ is even and $x$ is negative, then $x^n$ is positive, so that $(x^n)^\frac{1}{n}=\mid x \mid$. 
+
+For example $((-3)^2)^\frac{1}{2}= 9^\frac{1}{2}=3$. Notice that, in this case, the expression $\left((-3)^\frac{1}{2}\right)^2$ does not make sense because $(-3)^\frac{1}{2}$ is not defined. 
+
+When $n$ is odd, $x^n$ has the same sign as $x$, so that $(x^n)^\frac{1}{n}$ also has the same sign as $x$. 
+Therefore $(x^n)^\frac{1}{n}=x$. For example $((-3)^3)^{\frac{1}{3}} = (-27)^{\frac{1}{3}}=-3$ and, since $(-3)^{\frac{1}{3}}$ is defined, $\left((-3)^\frac{1}{3}\right)^3=-3$. 
+
+
+\begin{example}
+Find $x$ if $x^\frac{1}{4} = \frac{3}{2}$.
+
+\normalfont
+Since $x^\frac{1}{4} = \frac{3}{2}$, we know that 
+$$x = \left(x^\frac{1}{4}\right)^4 = \left(\frac{3}{2}\right)^4 = \frac{3^4}{2^4} = \frac{81}{16}.$$
+
+\end{example}
+
+\begin{example}
+Find $x$ if $x^\frac{1}{3} = \left(\frac{5}{4}\right)^\frac{1}{7}$.
+
+\normalfont
+Since $x^\frac{1}{3} = \left(\frac{5}{4}\right)^\frac{1}{7}$, we know that 
+$$x = \left(x^\frac{1}{3}\right)^{3} 
+= \left(\left(\frac{5}{4}\right)^\frac{1}{7}\right)^{3}  
+=  \left(\sqrt[7]{\frac{5}{4}}\right)^{3} = \sqrt[7]{\frac{125}{64}} .$$
+
+\end{example}
+
+
+
+\subsection{Practice Problems}
+
+In questions 1 - 5, use the rules of exponents to find an expression equivalent to given expression.
+\begin{enumerate}
+\item $ 36^\frac{1}{2} $ 
+\item $ (-125)^\frac{1}{3} $ 
+\item $ (\frac{9}{4})^\frac{1}{2} $ 
+\item $x^\frac{1}{4}x^{-\frac{1}{5}} $ 
+\item $ (m^\frac{1}{2}n^{-\frac{1}{3}})^{-\frac{1}{6}}$
+
+\bigskip
+\item Find $x$ if $x^\frac{1}{5} = \left(\frac{2}{3}\right)^\frac{1}{2}$.
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  $6 $ \  \quad
+2.  $ -5 $ \ \quad
+3.  $ \frac{3}{2} $ \  \quad
+4.  $ x^\frac{1}{20} $ \ \quad
+5. $\displaystyle\frac{ n^{1/18}} {  m^{1/12}} $ \ \quad
+6. $ \sqrt{\frac{32}{243}}  = \frac{4}{9}\sqrt{\frac{2}{3}} $
+
+\newpage
+\section{Polynomials}
+
+A \textbf{polynomial} is a function 
+described by an expression of the form $f(x)=a_nx^n + \cdots + a_1x+a_0$, 
+where $a_0, a_1,\ldots,a_n$ are real numbers and $n\geq0$ is an integer. 
+
+The expressions $a_n x^n, a_{n-1}x^{n-1}, \ldots, a_1x, a_0$ are called the
+\textbf{terms} of the polynomial $f$.
+For each integer $k = 0, 1, \ldots, n$, the number $a_k$ is called the \textbf{coefficient} of $x^k$ in the polynomial $f$.
+The number $a_0$ is called the \textbf{constant term} of $f$.
+Notice that $a_0 = a_0 x^0$, so that $a_0$ is the coefficient of $x^0$.
+
+Let $f(x) =a_nx^n + \cdots + a_1x+a_0$ be a polynomial in 
+which at least one of the coefficients is not zero.
+Then, the 
+\textbf{degree} of $f$ is the largest integer $k$ such that the coefficient of $x^k$ is not zero.
+(Notice that such an integer $k$ is guaranteed to exist.)
+In this case, $a_kx^k$ is the \textbf{leading term} of $f$, and $a_k$ is the \textbf{leading coefficient} of $f$.
+Since $a_0 = a_0 x^0$, it is possible for a polynomial to have degree zero.
+
+
+\begin{example} Let  $f(x)=2x^3-10x+9$. Then,
+\normalfont
+\begin{itemize}
+\item the terms of $f$ are $2x^3$, $0x^2$, $-10x$, and $9$;
+\item the coefficients of $f$ are the numbers $2, 0, -10$, and $9$;
+\item the degree of $f$ is 3, the leading term of $f$ is $2x^3$,  and the leading coefficient of $f$ is 2;
+\item the constant term of $f$ is 9.
+\end{itemize}
+\end{example}
+
+\begin{example} Let $f(x) = 14$.  Then,
+\normalfont
+\begin{itemize}
+\item the only term of $f$ is $14 = 14x^0$;
+\item the only coefficient of $f$ is $14$;
+\item the degree of $f$ is 0, the leading term of $f$ is $14 = 14x^0$,  and the leading coefficient of $f$ is 14;
+\item the constant term of $f$ is 14.
+\end{itemize}
+\end{example}
+
+The polynomial in which all coefficients are zero, that is $f(x) = 0 + 0x + 0x^2  \cdots$,
+is called \textbf{the zero polynomial}.  It is the only polynomial for which the degree is undefined.
+
+
+%degree of $f$ is $3$ and the leading coefficient is $2$.
+%\item If $f(x)=14$ then the degree of $f$ is $1$ and the leading coefficient is $14$.
+%\item The polynomial $f(x)=0$ is called the \textbf{zero polynomial}; its degree and leading coefficient are undefined.
+%\end{itemize}
+
+An \textbf{important fact} is that if $f(x)$ is a polynomial, then $f(a)=0$ if and only if $(x-a)$ divides $f(x)$. In other words, $a$ is a root of the polynomial $f(x)$ if and only if $(x-a)$ is a factor of $f(x)$. 
+Hence to check whether $x-a$ is a factor of $f(x)$, check whether $f(a) = 0$.
+Conversely, if $f(a) = 0$ then $(x-a)$ is a factor of $f(x)$.
+
+\begin{example} Let $f(x)=2x^3+x^2 -1$.  Then,
+\normalfont
+\begin{itemize}
+\item $x-1$ is not a factor of $f(x)$ because  $1$ is not a root of $f(x)$.  We can calculate $f(1) = 2 \neq 0$;
+\item $x+1 = x- (-1)$ is a factor of $f(x)$ because $f(-1) = 0$.  
+In fact, $f(x) = (x+1)(2x^2 - x + 1)$.  
+We can check this by multiplication $(x+1)(2x^2 - x + 1) = 2x^3 - x^2 + x + 2x^2 - x - 1 = 2x^3+x^2 -1$. 
+(The factors in this expression can be found by long division, as discussed below.)
+\end{itemize}
+\end{example}
+
+A \textbf{useful fact} is that if a polynomial $f(x)$ has leading coefficient equal to 1, 
+then an integer $a$ can be a root of $f(x)$ only if $a$ or $-a$ is a divisor of the constant term $a_0$. 
+It may be that all, some, or none of these are actually roots of $f$.
+Also, $f$ may have roots that are not integers.
+
+\begin{example} Let $f(x)=x^3-x^2-2x+2$.  Since the leading coefficient of $f$ is 1, 
+the only possible integers which could possibly be roots of $f$ are the divisors of 2 and their negatives, that is $1, -1, 2$, and $-2$.  Of these possibilities, only $1$ is a root (because $f(1) = 0$ whereas $f(-1), f(2)$ and $f(-2)$ are all non-zero).  
+In fact, $f(x) = (x-1)(x^2 - 2)$  
+%Both $\sqrt{2}$ and $-\sqrt{2}$ are also roots of $f$,
+%so that $f(x) = (x - 1)(x-\sqrt{2})(x + \sqrt{2})$. 
+\label{ex8}
+\end{example}
+
+Once we know a root of a polynomial, we can factor the polynomial using long division.
+Polynomials are divided just like numbers.  We saw in Example \ref{ex8} that 1 is a root of $f(x)=x^3-x^2-2x+2$,
+so we can divide $f(x)$ by $x-1$:
+\begin{center}
+ \polylongdiv{x^3-x^2-2x+2}{x-1}
+\end{center}
+%and (because the remainder is zero)  obtain that $f(x) = (x-1)(x^2 -2)$.  Since $x^2 - 2 = (x-\sqrt{2})(x + \sqrt{2})$, 
+%we have that $f(x) = (x - 1)(x-\sqrt{2})(x + \sqrt{2})$. 
+%
+%%%Jane started to talk here:
+Because the remainder is $0$, this means that $x^3-x^2-2x+2=(x-1)(x^2-2)$. We can factor further, because $(x^2-2) = (x-\sqrt{2})(x+\sqrt{2})$, so:
+    $$
+    f(x)=(x-1)\left(x-\sqrt{2}\right)\left(x+\sqrt{2}\right).
+    $$
+
+Since a product of numbers equals zero if and only if one of them is zero, 
+%%%Jane's interjected:
+$f(x)=0$ if and only if $x-1=0$ or $x-\sqrt{2}=0$ or $x+\sqrt{2}=0$, and so  
+the roots of $f(x)$ are $-1$, $\sqrt{2}$ and $-\sqrt{2}$.
+
+For any number $x$ in its domain, and expression represents a number.
+If we remember that $x$ just represents a number in the domain, then
+expressions involving a variable can be factored (using the commutative, associative and distributive laws). 
+%{\color{red}Not sure this statement says anything.}
+
+\begin{example}
+$$
+    \begin{array}{rcl}
+    2x(x+1)+(x+1)^2 &=& 2x(x+1)+(x+1)(x+1) \\
+                    &=& (x+1)[2x+(x+1)] \\
+                    &=& (x+1)(3x+1).
+    \end{array}
+    $$
+\label{ex9}
+\end{example}
+    
+\begin{example}
+    $$
+    \begin{array}{rcl}
+    4x(x+1)^3-6x^2(x+1)^2   &=& 2x(x+1)^2[2(x+1)-3x]\\
+                        &=& 2x(x+1)^2[2-x].
+    \end{array}
+    $$
+\label{ex10}
+\end{example}
+
+Notice that, in Examples \ref{ex9} and \ref{ex10}, factoring would have been much more difficult if the expression had been multiplied out. Sometimes factoring requires creatively grouping the terms. 
+
+\begin{example}
+    $$
+    \begin{array}{rcl}
+    8x+8x^3+x^4+x^6 &=& 8x(1+x^2)+x^4(1+x^2)\\
+                    &=& (1+x^2)[8x+x^4]\\
+                    &=& (1+x^2)(x)(8+x^3).
+    \end{array}
+    $$
+    
+\end{example}
+
+\subsection{Practice Problems}
+State the terms, the coefficients, the degree, the leading term, the leading coefficient, and the constant term of the following functions.
+\begin{enumerate}
+\item $f(x)=3x^2-10x$
+\item $g(x)=10x^5+x^3+15$
+\item Factor the following expressions:
+\begin{enumerate}
+\item $ 2x(x^2+1)^3-16(x^2+1)^5 $ 
+\item $ 8x+8x^3+x^4+x^6 $ 
+\end{enumerate}
+\item Find all possible integer roots of the function and of those possibilities, determine which are roots of the function.
+ $f(x)=x^2+x-6$ 
+\end{enumerate}
+
+\subsection{Solutions} 
+\begin{enumerate}
+\item The terms of $f$ are $3x^2$, $-10x$, and $0$;
+ the coefficients of $f$ are the numbers $3, -10$, and $0$;
+ the degree of $f$ is 2, the leading term of $f$ is $3x^2$,  and the leading coefficient of $f$ is 3;
+the constant term of $f$ is 0. \\
+\item The terms of $g$ are $10x^5$,$0x^4$,$x^3$,$0x^2$, $-10x$, and $15$;
+ the coefficients of $f$ are the numbers $10,0,1,0,0$, and $15$;
+ the degree of $f$ is 5, the leading term of $f$ is $10x^5$,  and the leading coefficient of $f$ is 10;
+the constant term of $f$ is 15.\\
+\item (a) $2(x^2+1)^3(x-8(x^2+1)^2)$ \  \quad
+    (b) $ x(1+x^2)(8+x^3) = x(1+x^2)(x+2)(x^2-2x+4)$ \ \quad
+\item Possible roots: $1, -1,2,-2,3,-3,6,-6$. Since $f(2)=0$ and $f(-3)=0$, $2$ and $-3$ are roots of $f$.
+\end{enumerate}
+
+\chapter{Module 3}
+
+\section{Inequalities Involving Rational Expressions}
+
+ Let's start with an example: % in $\mathbb{R}$.
+%\begin{example}
+\emph{{Represent the set $\left\{x:\frac{x+1}{x-5} \geq 0\right\}$ graphically on the real number line.}}\\
+%\normalfont
+
+%When $x = 0$, the quantity $\frac{x+1}{x-5} = -\frac{1}{5}$.
+%When $x = 6$, the quantity $\frac{x+1}{x-5} = 7$.
+%Thus the expression  $\frac{x+1}{x-5}$ changes sign somewhere between $x = 0$ and $x = 6$.
+%A change of sign can occur only at a place where the expression equals zero, 
+%or at a place where it is undefined.
+
+For each real number $x$ in its domain, the expression $\frac{x+1}{x-5}$ is either positive, negative, or zero.
+We are interested in the values of $x$ for which it is greater than or equal to zero.
+The expression can change sign only at places where it equals zero, or at places where it is undefined.
+Notice that $\frac{x+1}{x-5}=0$  when $x=-1$, and is undefined  when $x=5$. 
+There are no other roots or places where $\frac{x+1}{x-5}$ is undefined, 
+so $-1$ and $5$ are the only places that $\frac{x+1}{x-5}$ could change sign. 
+
+The numbers $-1$ and $5$ partition the set of other numbers in $\mathbb{R}$ into three intervals: 
+$(-\infty, -1)$, $(-1, 5)$, and $(5, \infty)$.  
+Because the expression can change sign only at $-1$ or $5$, for each of these, either every number in the interval belongs to the set or no number in the interval belongs to the set.
+We need to determine which possibility occurs for each of them.
+We can do this by testing one number from each interval and then remembering that we know 
+what happens with the expression at $-1$ and $5$.
+
+%%%Jane rewrote this and maybe said too much; can trim back down if necessary. 
+For the numbers less than $-1$, that is the numbers is $(-\infty, -1)$, we choose $-2$ as a test point (any number less than $-1$ will do, so we can choose one that's easy to calculate with):
+$\frac{-2+1}{-2-5}=\frac{-1}{-7}=\frac{1}{7}>0$, so $-2$ is in the set.  Thus every number in the interval $(-\infty, -1)$ is in the set.
+And we need to be careful at the endpoint, $x = -1$.
+We know already that $\frac{1-1}{1-5}=0$, so the endpoint $-1$ is in the set. 
+
+For the numbers between -1 and 5, that is in $(-1, 5)$, we choose 0 as our test point:
+$\frac{0+1}{0-5}=\frac{1}{-5}=-\frac{1}{5}<0$, so no number in the interval $(-1,5)$ is in the set.
+Again, we need to be careful at the endpoints (we already know what happens with $x = -1$).
+We know already that $\frac{5-1}{5-5}$ is undefined, so the endpoint $5$ is not in the set.
+
+For the numbers greater than 5, that is in $(5, \infty)$, we choose 6 as our test point:
+$\frac{6+1}{6-5}=\frac{7}{1}=7>0$, so every number in the interval $(5,\infty)$ is in the set.
+We already know what happens at the endpoint 5, and there are no other endpoints to check.
+
+Therefore, all numbers in $(-\infty,-1]$ and $(5,\infty)$ are in the set and no number in $(-1,5]$ is in the set. 
+That is, the set is $(-\infty,-1] \cup (5,\infty)$.  Its graph on the real number line is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (7.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick, ->] (5,0) -- (7.46,0);
+\filldraw[fill=white] (5,0) circle (.09cm);
+
+\draw[very thick,->] (-1,0) -- (-3.44,0);
+\filldraw[fill=black] (-1,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+%\end{example}
+
+
+
+\begin{example} 
+{ Represent the set $\left\{x:\frac{3x+1}{x+4} \geq 1\right\}$ graphically.} \\
+
+\normalfont
+%Notice that when $1$ is moved over to the right side of the inequality, the expression becomes $\frac{2x-3}{x+4} \geq 0$. 
+Notice that $\frac{3x+1}{x+4} \geq 1$ if and only if $\frac{3x+1}{x+4} -1 \geq 0$, which we can rewrite further by finding a common denominator:
+    $$
+    \begin{array}{rcl}
+     0  & \leq &    \frac{3x+1}{x+4} -1 \\ \\
+        & =&        \frac{3x+1}{x+4} - \frac{x+4}{x+4}  \\ \\
+        &=&     \frac{3x+1 - (x+4)}{x+4}    \\ \\
+        &=&     \frac{2x-3}{x+4}.
+    \end{array}
+    $$
+Therefore, $\left\{x:\frac{3x+1}{x+4} \geq 1\right\} = \left\{x:\frac{2x-3}{x+4} \geq 0 \right\}$.
+Now we can see that $\frac{2x-3}{x+4}=0$ when $x=\frac{3}{2}$ and is undefined when $x=-4$. There are no other roots or places where $\frac{2x-3}{x+4}$ is undefined, so $\frac{3}{2}$ and $-4$ are the only places where $\frac{2x-3}{x+4}$ could change sign. This partitions the other numbers in $\mathbb{R}$ into three intervals, and again we need to determine which ones contain numbers that are in the set, and be careful about $-4$ and $-\frac{3}{2}$.
+
+%%%Again, Jane rewrote this and maybe said too much; can trim back down if necessary. 
+For $(-\infty, -4)$, test $x = -5$:  $\frac{2(-5)-3}{-5+4}=\frac{-13}{-1}=13>0$, so $-5$ is in the set. 
+Therefore every number in the interval $(-\infty,-4)$ is in the set.
+We know already that $\frac{2(-4)-3}{-4+4}$ is undefined, so the endpoint $-4$ is not in the set.
+
+For $(-4, \frac{3}{2})$, test $x = -2$:  $\frac{2(-2)-3}{-2+4}=\frac{-7}{2}=-\frac{7}{2}<0$, so $-2$ is not in the set and so no number in the interval $\left(-4,\frac{3}{2}\right)$ is in the set.
+We know that $\frac{2\frac{3}{2}-3}{\frac{3}{2}x+4}=0$, so $x=\frac{3}{2}$ is in the set.
+
+For $(\frac{3}{2}, \infty)$, test $x = 2$: $\frac{2(2)-3}{2+4}=\frac{1}{6}>0$, so $2$ is in the set.
+Therefore every number in the interval $\left(\frac{3}{2},\infty\right)$ is in the set. 
+
+Therefore the numbers in $(-\infty,-4)$ and $[\frac{3}{2},\infty)$ are in the set and the numbers in $[-4,\frac{3}{2})$ are not in the set.   
+That is, the set is  $(-\infty,-4) \cup [\frac{3}{2},\infty)$.
+Its graph on the real number line is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (1.5,0) -- (5.46,0);
+\filldraw[fill=black] (1.5,0) circle (.09cm);
+
+\draw[very thick,->] (-4,0) -- (-5.44,0);
+\filldraw[fill=white] (-4,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+\end{example}
+
+
+\begin{example}
+ Graph the solution set to $ \frac{x}{3} < 0 $ on the real number line. \\
+
+\normalfont
+The solution set is $\left\{x: \frac{x}{3} < 0\right\}$.
+The expression $\frac{x}{3}$ is defined for all real numbers $x$, and equals zero only if $x = 0$.
+The remaining real numbers are partitioned into two intervals: $(-\infty, 0)$ and $(0, \infty)$.  
+We need to pick a test point in each one and be careful about what happens at $x = 0$.
+
+By choosing the test point $x = -1$ we obtain $-\frac{1}{3} < 0$, so every number in $(-\infty, 0)$ 
+is in the solution set.  Since $\frac{0}{3} = 0$, the endpoint 0 is not in the solution set.
+By choosing the test point $x = 1$ we obtain $\frac{1}{3} > 0$, so  no number in $(0, \infty)$ 
+is in the solution set. 
+
+Therefore, the solution set to the given inequality is $(-\infty, 0)$.  Its graph on the real
+number line is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (1.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (0,0) -- (-3.44,0);
+\filldraw[fill=white] (0,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+\end{example}
+
+
+
+
+
+
+\begin{example}
+ {Graph the solution set to $ \frac{6}{x} < \frac{3}{4} $, and on the real number line} \\
+ 
+ \normalfont
+Notice that  $ \frac{6}{x} < \frac{3}{4} $  if and only if 
+$ \frac{6}{x} - \frac{3}{4} < 0 $.
+Now,
+    $$
+    \begin{array}{rcl}
+    0 & > & \frac{6}{x} - \frac{3}{4}\\ \\
+        & = & \frac{6}{x} - \frac{3}{4}\\ \\
+        & = & \frac{6\cdot4}{4x} - \frac{3x}{4x}\\ \\
+        & = & \frac{24-3x}{4x}\\ \\ 
+    \end{array}
+    $$
+Thus the solution set is $\left\{ x: \frac{24-3x}{4x} < 0\right\}$.
+The expression $\frac{24-3x}{4x}$ is undefined when $x = 0$, and equals zero when $x = 8$.
+The remaining real numbers are partitioned into three intervals, $(-\infty, 0)$, $(0, 8)$ and $(8, \infty)$.
+We must pick a test point in each one, and then be careful about what happens at $0$ and $8$.
+
+Testing with $x = -1$ gives  $\frac{24-3 (-1)}{4 (-1)} = -\frac{27}{4} < 0$, so every number in 
+$(-\infty, 0)$ belongs to the solution set.
+The expression is undefined at $x = 0$, so it does not belong to the solution set.
+
+Testing with $x = 1$ gives $ \frac{24-3(1)}{4(1)} = \frac{21}{4} > 0$, so no number in
+$(0, 8)$ belongs to the solution set.
+Since $\frac{24-3x}{4x}$ equals zero when $x = 8$, the endpoint $8$ is not in the solution set.
+
+Testing with $x = 10$ gives $ \frac{24-3(10)}{4(10)} = -\frac{6}{40} < 0$, so every number in 
+$(8, \infty)$ belongs to the solution set.
+
+The solution set is therefore $(-\infty, 0) \cup (8, \infty)$.  Its graph is shown below.
+
+%\begin{center}x $<$ 0 and x $>$ 8 \end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (9.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3,4,5,6,7,8,9} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7,8,9} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\draw[very thick,->] (8.08,0) -- (9.46,0);
+\filldraw[fill=white] (8,0) circle (.09cm);
+
+\draw[very thick,->] (0,0) -- (-3.44,0);
+\filldraw[fill=white] (0,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+\begin{example}
+Graph the solution set to $\frac{1}{3x-1} < \frac{2x - 5}{x + 4}$ on the real number line.
+
+\normalfont
+We have  $\frac{1}{3x-1} < \frac{2x - 5}{x + 4}$ if and only if 
+$$
+\begin{array}{rcl}
+0 & < &  \frac{2x - 5}{x+ 4} - \frac{1}{3x-1}\\ \\
+& = & \frac{(2x - 5)(3x-1)}{(x+ 4)(3x-1)} - \frac{x+4}{(x+4)(3x-1)}\\ \\
+& = & \frac{(2x - 5)(3x-1) - (x+4)} {(x+4)(3x-1)}\\ \\
+& = & \frac{6x^2 -18x + 1}{(x+4)(3x-1)}\\
+\end{array}
+$$
+Thus, the solution set is $\left\{x:  \frac{6x^2 -18x + 1}{(x+4)(3x-1)} > 0\right\}$.
+
+The expression $\frac{6x^2 -18x + 1}{(x+4)(3x-1)} $ is undefined when $x=-4$ and when $x = \frac{1}{3}$.
+It equals zero when $6x^2 -18x + 1 = 0$, that is, when 
+$$x = \frac{-(-18) \pm \sqrt{(-18)^2 - 4\cdot6\cdot1} } {2 \cdot 6} 
+= \frac{18 \pm \sqrt{300}}{12}
+= \frac{18 \pm 10\sqrt{3}}{12}
+= \frac{9 \pm 5\sqrt{3}}{6}$$
+
+Now, $\frac{9 - 5\sqrt{3}}{6} \approx 0.06$ and 
+ $\frac{9 + 5\sqrt{3}}{6} \approx 2.94$.
+ Thus the numbers $-4, \frac{9 - 5\sqrt{3}}{6}, \frac{1}{3}$ and $\frac{9 + 5\sqrt{3}}{6}$ (in this order)
+ partition the other real numbers into five intervals.
+ We need to pick a test point in each one of them, and then take our knowledge of what happens at 
+  $-4, \frac{9 - 5\sqrt{3}}{6}, \frac{1}{3}$ and $\frac{9 + 5\sqrt{3}}{6}$ into account.
+  
+For the interval $(-\infty, -4)$ we choose $x = -5$ as the test point.  When $x = -5$, the expression evaluates to $15.0625$, so all points in this interval belong to the solution set.  Since the expression is undefined at $x = -4$, it does not belong to the solution set.
+
+For the interval $(-4, \frac{9 - 5\sqrt{3}}{6})$ we choose $x=-1$ as the test point.
+When $x = -1$, the expression evaluates to $-\frac{29}{12} < 0$, so no point in this interval belongs tp the solution set.  Since the expression equals zero when $\frac{9 - 5\sqrt{3}}{6}$, this point is not in the solution set.
+
+For the interval $(\frac{9 - 5\sqrt{3}}{6}, \frac{1}{3})$ we choose $x = 0.1$ as the test point.
+When $x = 0.1$ the expression evaluates to approximately $0.26 > 0$, so all points in this interval belong to the solution set.  Since the expression is undefined at $x = \frac{1}{3}$, it does not belong to the solution set.
+
+For the interval $(\frac{1}{3}, \frac{9 + 5\sqrt{3}}{6})$ we choose $x=1$ as the test point.
+When, $x = 1$ the expression evaluates to $-1.1 < 0$, so no points in this interval belong to the solution set.
+ Since the expression equals zero when $\frac{9 -+5\sqrt{3}}{6}$, this point is not in the solution set.
+ 
+ For the interval $(\frac{9 + 5\sqrt{3}}{6}, \infty)$, we choose $x = 10$ as the test point.
+When, $x = 10$ the expression evaluates to approximately $1.04 > 0$, so all points in this interval belong to the solution set.
+
+The solution set is therefore $(-\infty, -4) \cup (\frac{9 - 5\sqrt{3}}{6}, \frac{1}{3}) \cup (\frac{9 + 5\sqrt{3}}{6}, \infty)$.
+Its graph is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (4.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3, -2, -1,0,1,2,3,4} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3, -2, -1,0,1,2,3,4} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\draw[very thick,->] (2.9,0) -- (4.56,0);
+\filldraw[fill=white] (2.9,0) circle (.09cm);
+
+\draw[very thick] (0.06, 0) -- (0.33, 0);
+\filldraw[fill=white] (0.06,0) circle (.09cm);
+\filldraw[fill=white] (0.33,0) circle (.09cm);
+
+
+\draw[very thick,->] (-4,0) -- (-5.6,0);
+\filldraw[fill=white] (-4,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+
+We close this section by noting that, despite all appearances, it is not true that the intervals in the partition of the real line determined by the roots of the expression and the points where it is undefined are alternately part of the solution set and not part of the solution set (or vice-versa).  To see this, work through finding the solution set of $\frac{(x-1)^2}{(x-2)^2} \geq 0$. The solution set is  
+$(-\infty, 1] \cup [1, 2) \cup (2, \infty) = (-\infty, 2) \cup (2, \infty)$, that is, all real numbers except 2.
+
+\subsection{Practice Problems}
+
+Find the solution sets for the following expressions then graph them on the real number line.
+\begin{enumerate}
+\item $ \frac{x}{7} > 0 $ 
+\item $ \frac{9}{x} \leq \frac{7}{5} $ 
+\item $\frac{x+4}{x-2} < 0$ 
+\item $\frac{2x+1}{x-5} <3 $ 
+\item $ \frac{x+2}{1-x} \geq \frac{x-4}{x+3}$
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  $(0,\infty)$ \quad
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (3.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick,->] (0,0) -- (3.44,0);
+\filldraw[fill=white] (0,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+2.  $ (-\infty , 0)$ and $\left[\frac{45}{7}, \infty\right)$ \ \quad 
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (9.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3,4,5,6,7,8,9} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7,8,9} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\draw[very thick,->] (6.43,0) -- (9.46,0);
+\filldraw[fill=black] (6.43,0) circle (.09cm);
+
+\draw[very thick,->] (0,0) -- (-3.44,0);
+\filldraw[fill=white] (0,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+3.  $ (-4,2) $ \ \quad 
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick] (-4,0) -- (2,0);
+\filldraw[fill=white] (2,0) circle (.09cm);
+\filldraw[fill=white] (-4,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+4.  $ (-\infty , 5)$ and $\left(16, \infty\right)$ 
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (4.5,0) -- (17.5,0) ; %edit here for the axis
+\foreach \x in  {5,6,7,8,9,10,11,12,13,14,15,16,17} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {5,6,7,8,9,10,11,12,13,14,15,16,17} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+
+\draw[very thick,->] (5.0,0) -- (4.46,0);
+\filldraw[fill=white] (5,0) circle (.09cm);
+
+\draw[very thick,->] (16,0) -- (17.44,0);
+\filldraw[fill=white] (16,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+\medskip
+5. $\left(-3,1\right)$ \ \quad 
+
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick] (-3,0) -- (1,0);
+\filldraw[fill=white] (1,0) circle (.09cm);
+\filldraw[fill=white] (-3,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+
+%\begin{center}
+%\begin{tikzpicture}
+%\draw[latex-latex] (-5.5,0) -- (5.5,0) ; %edit here for the axis
+%\foreach \x in  {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the vertical lines
+%\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+%\foreach \x in {-5,-4,-3,-2,-1,0,1,2,3,4,5} % edit here for the numbers
+%\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+%{$\x$};
+%
+%\draw[very thick] (-3,0) -- (-1.25,0);
+%\filldraw[fill=black] (-1.25,0) circle (.09cm);
+%\filldraw[fill=white] (-3,0) circle (.09cm);
+%
+%\end{tikzpicture}
+%\end{center}
+
+\newpage
+\section{Rational Exponents}
+
+For a real number $x$ and positive integers $m$ and $n$ , we define $x^{\frac{m}{n}}$ to be the real number $y$ such that $y^n = x^m$, if such a number $y$ exists.  Notice how this coincides with the definition of exponents $\frac{1}{n}$ when $m = 1$.
+
+\begin{example}
+$ $ \normalfont
+\begin{itemize}
+\item $9^\frac{1}{2} = 3$ because $3^2 = 9^1$
+\item $8^\frac{2}{3} = 4$ because $4^3 = 64 = 8^2$
+\item $(-3)^\frac{5}{2}$ is undefined since $(-3)^5 = -243$ and a negative number is not the square of any number (because $y^2 \geq 0$ for every real number $y$).
+\end{itemize}
+\end{example}
+
+
+It follows from the definition that 
+$$x^\frac{m}{n} = \left(x^m\right)^\frac{1}{n}$$
+and, if $x^\frac{1}{n}$ is defined, then 
+$$x^\frac{m}{n} = \left(x^\frac{1}{n}\right)^m.$$
+
+
+
+\begin{example}
+$ $
+\normalfont
+\begin{itemize}
+\item $5^\frac{3}{2} = \left(5^3\right)^\frac{1}{2} = \sqrt{125}$.  Also 
+$5^\frac{3}{2} = \left(5^\frac{1}{2}\right)^3 = \left(\sqrt{5}\right)^3 = \sqrt{125}$.  Note that $\left(\sqrt{5}\right)^3 = \sqrt{125}$ because squaring both sides gives 125.
+
+\item $\left(-3\right)^\frac{6}{2} = \left(\left(-3\right)^6\right)^\frac{1}{2} = \sqrt{729} = 27$, but 
+ $\left(\left(-3\right)^\frac{1}{2}\right)^6$ is undefined because $\left(-3\right)^\frac{1}{2}$ is undefined.
+\end{itemize}
+\label{ex2}
+\end{example}
+
+
+When a rational exponent is not in lowest terms, for example as in the last bullet point of Example \ref{ex2},  it is tempting to reduce it to lowest terms.
+Care is needed, however, because that can be a terrible idea.
+Using that same example, $\left(-3\right)^\frac{6}{2} = 27$,
+but  $\left(-3\right)^3 = -27$.  Hence $\left(-3\right)^\frac{6}{2} \neq \left(-3\right)^3$ even though 
+$\frac{6}{2} = 3$. Why?  It is a question of applying the definition properly. 
+The difficulty is that $(-3)^6$ is positive, so that $\left(-3\right)^\frac{6}{2} = \left(\left(-3\right)^6\right)^\frac{1}{2}$  is positive, but 
+$\frac{6}{2} = 3$ is an odd integer and a negative number raised to an odd power is negative.
+When reducing a rational exponent to lowest terms, one should always check whether the expression obtained has the same sign as the original expression. This issue only arises when the base is negative.
+
+The familiar rules of exponents apply to expressions involving rational exponents.  When exponential expressions with the same base are multiplied, the exponents are added, as in
+$$2^\frac{2}{3} 2^\frac{4}{5} = 2^{\frac{2}{3} + \frac{4}{5}} = 2^\frac{22}{15}.$$
+Note that all numbers involved in positive, so each equality holds.
+When an exponential expression is raised to a higher power, the exponents are multiplied as in
+$$\left((-3)^3\right)^\frac{2}{5} = (-3)^\frac{6}{5}.$$
+Both the left hand side and right hand side of this statement are positive, so the equality holds.
+
+%\newpage
+\begin{example}
+$ $
+\normalfont
+
+\begin{itemize}
+\item Look at $8^\frac{2}{3} = (8^2)^\frac{1}{3}=(64)^\frac{1}{3}=4$.  
+Since $8^\frac{1}{3}$ is defined, we can also compute $(8^\frac{1}{3})^2 = 2^2 = 4$.  
+
+\item Look at $625^\frac{3}{4} = (625^3)^\frac{1}{4}=(244140625)^\frac{1}{3}=25$.
+Since $625^\frac{1}{4}$ is defined, we can also compute 
+$(625^\frac{1}{4})^3 = 5^2 = 25$, which is arguably an easier calculation.
+
+\item Look at $(-49)^\frac{4}{2} = \left((-49)^4\right)^\frac{1}{2} = \sqrt{(-49)^4} = \sqrt{5764801} = 2401$.
+We can not compute as  $\left((-49)^\frac{1}{2}\right)^4$ because  $(-49)^\frac{1}{2}$ is not defined.
+We can compute as $(-49)^\frac{4}{2} = (-49)^2 = 2401$ because $(-49)^\frac{4}{2}$ is positive (because $(-49)^4$ is positive) and so is $(-49)^2$.
+
+\item Look at $(-5)^\frac{10}{2} = \sqrt{(-5)^{10}} = \sqrt{25^5} = \left(\sqrt{25}\right)^5 = 5^5$.
+We can not compute as $\left((-5)^\frac{1}{2}\right)^{10}$ because $(-5)^\frac{1}{2}$ is undefined.
+And in this case, since $(-5)^{10}$ is positive we have that $(-5)^\frac{10}{2}$ is positive, whereas 
+$(-5)^5$ is negative, so $(-5)^\frac{10}{2} \neq (-5)^5$.
+\end{itemize}
+\end{example}
+
+Finally, as before, 
+$$x^{-\frac{m}{n}} = \left(x^{-1}\right)^\frac{m}{n} = \left(\frac{1}{x}\right)^\frac{m}{n} 
+= \left(\left(\frac{1}{x}\right)^m\right)^\frac{1}{n} 
+= \left(\frac{1}{x^m}\right)^\frac{1}{n} =\frac{1}{x^\frac{m}{n}}
+$$
+when $x^{-\frac{m}{n}}$ is defined.
+ 
+%\begin{example}
+%$ $
+%\begin{itemize}
+%\item $7^{12/4} = 7^3$ 
+%\item $64^\frac{5}{3} = (64^\frac{1}{3})^5 = 2^5 = 32$
+%\item $81^\frac{-3}{4} = \frac{1}{81^\frac{3}{4}} = \frac{1}{(81^\frac{1}{4})^3)} = \frac{1}{3^3} = \frac{1}{27} = 3^{-3} $
+%
+%
+%We may also use the reciprocal of the exponent $m/n$ to evaluate rational exponents.  
+%\item $x^\frac{2}{3}=25$\\
+%$(x^\frac{2}{3})^\frac{3}{2}=25^\frac{3}{2}$\\
+%$x=(25^\frac{1}{2})^3$\\ $x=125$
+%
+%\end{itemize}
+%\end{example}
+
+%\begin{example}
+%$(\frac{243}{32})^\frac{4}{5}$\\
+%$((\frac{243}{32})^\frac{1}{5})^4$\\
+%$(\frac{3}{2})^4$\\
+%$(\frac{81}{16})$
+%
+%\end{example}
+
+\begin{example}
+Find $x$ if $x^\frac{3}{5} = -7$.
+
+\normalfont
+Since $x^\frac{3}{5} = -7$, we have that
+$x^3 = \left(x^\frac{3}{5}\right)^5 = (-7)^5$, so that
+$$x = \left(x^3\right)^\frac{1}{3} = \left((-7)^5\right)^\frac{1}{3} = (-7)^\frac{5}{3}.$$
+\end{example}
+
+\subsection{Exercises}
+In questions 1 to 5, find a simpler form of each expression.
+\begin{enumerate}
+\item $ -16^\frac{3}{2} $ 
+\item $(\frac{8}{343})^{-\frac{2}{3}}  $ 
+\item $ (27)^\frac{5}{3} $ 
+\item $ (-6)^{\frac{6}{2}} $ 
+\item $ (-\frac{32}{243})^\frac{2}{5} $ 
+
+\bigskip
+\item Find $x$ if $x^{\frac{7}{4}} = 9$.
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  $-64$ \  \quad
+2. $\frac{49}{4}$ \ \quad
+3.  $243$ \  \quad
+4.  $216$ \ \quad
+5. $\frac{4}{9}$ \ \quad
+6. $9^\frac{4}{7} = 3^\frac{8}{7}$. %Fixed typo (6/7 became 8/7) Aug 18, 2021
+
+\newpage
+\section{Curve Sketching}
+
+In this section we will review methods for obtaining a rough sketch of the graph of a function, that is, the set of points $(x, y)$, where $y = f(x)$.  
+We will focus on polynomials, but the same methods apply to roughly sketching the graph of any function.
+There are three basic tools:
+\begin{itemize}
+\item knowing the basic shape of the function whose graph is being sketched;
+\item understanding how graphs are shifted or stretched in the plane by adding or multiplying by constants;
+\item plotting some points.
+\end{itemize}
+Precisely sketching the graph of a function is a topic of study in calculus that builds on these tools.
+
+The easiest function to graph is a \textbf{linear function}, which corresponds to the set of points $(x, y)$ where $y = mx + b$.  The graph of a linear function is a line.
+Since two points determine a line, all that's needed is to pick two different $x$ values, compute the corresponding $y$ values, and draw a line through the two points just obtained.
+
+A \textbf{quadratic function} is a function $f(x) = ax^2+bx+c$, where $a \neq 0$ (otherwise the function is linear, not quadratic).   The graph of a quadratic function is a \textbf{parabola}.
+Figure \ref{parabolas} shows the graph of $y = x^2$ on the left and $y = -x^2$ on the right.
+The important point is that when $a > 0$ then the graph of $y = f(x)$ is shaped like the graph of $y = x^2$, and 
+when $a < 0$ it is shaped like the graph of $y = -x^2$.
+
+%\textbf{Parabolas}\\
+%If $f(x)$ is a polynomial of degree 2 (a $quadratic$), then the curve $y=f(x)$ is a $parabola$. Consider a general quadratic: 
+%\begin{center}
+%$y=ax^2+bx+c$.
+%\end{center}
+%
+%If $a>0$ then as $x$ approaches either $\infty$ or $-\infty$, the value $ax^2$ will approach $\infty$. If $a<0$, then $ax^2$ will approach $-\infty$ as $x$ approaches either $\infty$ or $-\infty$. This observation, although we cannot make it precise without using the concept of a $limit$, explains why the sign of the leading coefficient determines the shape of the parabola. 
+\begin{figure}[bh]
+\begin{center}
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {pow(x,2)};
+\end{axis}
+\end{tikzpicture} \quad
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=0,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {-pow(x,2)};
+\end{axis}
+\end{tikzpicture}
+\label{parabolas}
+\end{center}
+\caption{The graph of $y = x^2$ and $y = -x^2$.}
+\label{parabolas}
+\end{figure}
+
+
+It is a fact that the graph of any polynomial of \emph{even} degree is roughly parabolic in shape, and opens
+upwards when the leading coefficient is positive and downwards when the leading coefficient is negative.  In the "middle" the graph may wiggle around some depending on the number of different roots the function has (if the degree is $n$, then there are at most $n$ real roots; if the degree is even there could be no real roots).  Roughly speaking, each time the function crosses the $x$-axis leads to a "hump" in its graph. For example,  the graphs $y=(x-2)(x-1)(x+1)(x+2)$ and $y=-(x-2)(x-1)(x+1)(x+2)$ are shown below. 
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=40,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {(x-2)*(x-1)*(x+1)*(x+2)};
+\end{axis}
+\end{tikzpicture} \quad
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=0,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {-(x-2)*(x-1)*(x+1)*(x+2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+A \emph{cubic function} is a  function $f(x) = ax^3+bx^2+cx + d$, where $a \neq 0$.
+The graph of $y = x^3$ is shown below.
+The graph of $y = -x^3$ is its mirror image across the $x$-axis.
+
+ \begin{center}
+ \begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=40,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {pow(x,3)};
+\end{axis}
+\end{tikzpicture}
+ \end{center}
+ 
+It is a fact that the graph of any polynomial of \emph{odd} degree is roughly the same shape as the graph of $x^3$.
+When the leading coefficient is positive it looks like the graph of $y = x^3$, and when the leading coefficient is negative it looks like the graph of $y = -x^3$.  It is a fact that a polynomial of odd degree always has a real root.
+
+Now that we've covered the basic shapes of the graphs of polynomials, we review how graphs can be transformed.
+\begin{itemize}
+\item If $c$ is a constant, then the graph of $y = f(x) + c$ is the same as the graph of $y = f(x)$ except shifted by $c$ units (up if $c > 0$ and down if $c < 0$). For example, the graph of $y = x^3 + 8$ is shown below.
+
+ \begin{center}
+ \begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=3,ymax=40,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {pow(x,3) + 8};
+\end{axis}
+\end{tikzpicture}
+ \end{center}
+ 
+\item If $h$ is a constant, then the graph of $y = f(x - h)$ is the same as the graph of $y = f(x)$ except shifted by $h$ units (right if $h > 0$ and left if $h < 0$). For example, the graph of $y = (x+2)^2$ is shown below.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmin=-5,xmax=1,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-5:3,samples=100]  {pow(x+2,2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\item If $s$ is a constant, then the graph of $y = s\cdot f(x)$ is the same as the graph of $f(x)$, except the $y$ values are scaled by the amount $s$.  For example, in the graph of $y = 2 \cdot x^2$ shown below, for the same $x$ value, the $y$ values are twice as large as for $y = x^2$;  in this sense the graph increases twice as fast.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmin=-3,xmax=3, ymax = 10,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-3:3,samples=100]  {2*pow(x,2)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\item If $d$ is a constant, then the graph of $y = f(d \cdot x)$ is the same as the graph of $y = f(x)$ except compressed (left to right) by a factor of $d$.  For example, the graph of $y = (2x)^3$ is the same as the graph of $y = x^3$ except that it is compressed, and therefore grows more quickly.
+
+ \begin{center}
+ \begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+         xmin = -2,  xmax=2,ymax=40,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-2:2,samples=100]  {pow(2*x,3)};
+\end{axis}
+\end{tikzpicture}
+ \end{center}
+
+
+\end{itemize}
+
+\begin{example}
+Sketch the graph of $y = 2(x-1)^3 - 4$.
+
+\normalfont
+Using the three bullet points above, this is the graph of $y = x^3$ shifted right by 1 unit, down by 4 units, and scaled by a factor of 2.
+The sketch can be made a bit more accurate by identifying several points on the curve and then drawing a smooth curve or the correct shape through them.
+$$
+\begin{array}{c|c|c|c|c|c|c|c}
+x & -2 & -1 & 0 & 1 & 2 & 3 & 4\\
+\cline{1-8}
+y & -58 & -20 & -5 & -4 & -2 &  12 & 50\\
+\end{array}
+$$
+
+\begin{center}
+ \begin{tikzpicture}[scale=0.5, transform shape]
+\begin{axis}[
+grid=both,
+          xmax=5,ymax=40,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-2:5,samples=100]  {2*pow(x-1,3) - 4};
+\end{axis}
+\end{tikzpicture}
+ \end{center}
+ \label{explot}
+ 
+\end{example}
+
+Example \ref{explot} illustrates that making a table of a few values of a function can help with sketching its graph.
+Since the graph of a function has a "hump" between roots, it can be useful to identify the roots;  the function value at those points is easy to find -- it is zero.
+
+When the function is quadratic, the quadratic formula can be used to find the roots. if there are any.  
+And once the roots are known, the $x$-coordinate of vertex (the point where the function achieves its minimum or maximum value) is midway between them.
+
+\begin{example}
+Sketch the graph of $f(x) = x^2-8x+12$.
+
+\normalfont
+By the quadratic formula (or by factoring), we see that the roots of $f(x)$ are $2$ and $6$.
+Hence the graph of $y = f(x)$ is a parabola that opens upwards, crosses the $x$-axis at $2$ and $6$, and has vertex with $x$-coordinate $4$ (and $y$-coordinate $-4$, by computing $f(-4)$).  We can get 
+more information by computing that $f(3) = -3$., and noting that since a parabola is symmetric about the
+vertical line through the vertex, $f(5) = -3$ too.  This gives us enough points to make a rough sketch of the curve.
+
+\begin{center}
+
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=10,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=1/2^6:10,samples=100]  {pow(x,2)-(8*x)+12};
+ \addplot[blue,mark=*] coordinates {(4,-4)};
+ \addplot[blue,mark=*] coordinates {(2,0)};
+ \addplot[blue,mark=*] coordinates {(6,0)};
+ 
+ \addplot[green,mark=*] coordinates {(3,-3)};
+ \addplot[green,mark=*] coordinates {(5,-3)};
+ %\addplot[green,mark=*] coordinates {(1,5)};
+\end{axis}
+\end{tikzpicture}
+
+\end{center}
+\end{example}
+
+We close this section by applying the techniques described above to sketch the graph of a function which is not a polynomial.
+
+\begin{example}
+Sketch the graph of $f(x) = \frac{1}{x}$.
+
+\normalfont
+First, notice that the domain of $f$ is the set of all real numbers except zero.
+Second, notice that $f$ has no real roots because the equation $\frac{1}{x} = 0$ has no solution.
+Hence the graph of $y = f(x)$ does not meet the $x$-axis.
+It also helps to notice that $f(-x) = -f(x)$, because $\frac{1}{-x} = -\frac{1}{x}$, so that the graph of the function when $x < 0$ are the negatives of the corresponding positive $x$ values.
+
+Next, we can make a table of values for $y = f(x)$:
+$$
+\begin{array}{c|c|c|c|c|c|c}
+x & -3 & -2 & -1  & 1 & 2 & 3 \\
+\cline{1-7}
+y & -0.33 & -0.5 & -1 & 1 & 0.5 & 0.33\\
+\end{array}
+$$
+This helps, but it would be useful to know what happens to $f(x)$ as $x$ gets close to 0.
+If $x$ is positive and close to zero, then $f(x)$ is very large and positive.
+If $x$ is negative and close to zero, then $f(x)$ is negative and very large in absolute value.
+This can be confirmed by evaluating $f$ at a few more points like $0.5, 0.25$ and $0.1$.
+The information gathered leads to the following sketch.
+
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle,samples=200]
+\addplot[black,domain=-5:-0.5] {1/x};
+\addplot[black,domain=0.5:5] {1/x};
+\draw[red!,dashed] (axis cs:0,-10) -- (axis cs:0,10);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+\end{example}
+
+
+
+%Recall that roots of a polynomial correspond to its linear factors. A quadratic cannot have more than two linear factors, which is why a parabola cannot have more than two $x$-intercepts. The $vertex$ of the parabola is its highest point when $a<0$, its lowest point when $a>0$, and is always halfway between the two $x$-intercepts if the parabola has two. These claims can be proven using calculus!
+%
+%Here are two useful methods of graphing a quadratic, which we will illustrate by way of the example $y=x^2-8x+12$.
+%\begin{itemize}
+%\item Factoring
+%Method 1: Factoring.
+%
+%Compare the equation with the standard form,$ y=ax^2+bx+c$. Since the value of a is positive, the parabola opens up. Notice that, $x^2-8x+12=(x-2)(x-6)$, so $x^2-8x+12=0$ if and only if either $(x-2)=0$ or $(x-6)=0$. Therefore, the x-intercepts of the function are 6 and 2.
+%
+%The x-coordinate of the vertex is the midpoint of the x-intercepts. So, here the x-coordinate of the vertex will be $(2+6)/2=4$. Substitute x=4 in the equation $y=x^2-8x+12$ to find that the y-coordinate of the vertex is -4. That is, the coordinates of the vertex are (4,-4).
+%
+%Now we have 3 points (4,-4), (2,0) and (6,0) that are on the parabola. Plot the points. Join them by a smooth curve and extend the parabola.
+%\item Method 2: Transform to vertex form using complete the square.
+%
+%This method involves us re-writing $y=x^2-8x+12$ so that it has the form $y=a(x-h)^2 +k$. Quadratics in this form can be graphed by translating and scaling the curve $y=x^2$. The vertex of the parabola will be at $(h,k)$ and the scaling factor $a$ determines which way (up or down) and how rapidly the parabola "opens". The line $y=h$ is the parabola's axis of symmetry. 
+%
+%To complete the square, we need to work backwards. Notice that 
+%\begin{center}
+%$y=a(x-k)^2+m$\\
+%$y=a(x^2-2kx+k^2)+m$,
+%\end{center}
+%So we know that $k$ will be determined by the linear term. 
+%\begin{center}
+%$y=x^2-8x+12$\\
+%$y=x^2-2(4x)+12$\\
+%$y=x^2-2(4x)+(4)^2 -(4)^2+12$\\
+%$y=x^2-2(4x)+(4)^2 -16+12$\\
+%$y=x^2-2(4x)+(4)^2 -4$\\
+%$y=(x-4)^2-4$
+%\end{center}
+%We added $0$ in the form $(4)^2 -(4)^2$ because we were working toward $x^2-2(4x)+(4)^2=(x-4)^2$, which is the "square" in "completing the square".
+%
+%Now we can graph $y=(x-4)^2-4$ by first plotting the vertex $(4,-4)$ and then plotting any other pair of points on the parabola and using the axis of symmetry to mirror the points on one side of the parabola.
+%\end{itemize}
+%
+%
+%
+%\begin{tikzpicture}
+%\begin{axis}[
+%grid=both,
+%          xmax=10,ymax=5,
+%          axis lines=middle,
+%          enlargelimits,
+%xlabel=$x$,ylabel=$y$
+%]
+%\addplot[black,domain=1/2^6:10,samples=100]  {pow(x,2)-(8*x)+12};
+% \addplot[blue,mark=*] coordinates {(4,-4)};
+% \addplot[blue,mark=*] coordinates {(2,0)};
+% \addplot[blue,mark=*] coordinates {(6,0)};
+% 
+% \addplot[green,mark=*] coordinates {(3,-3)};
+% \addplot[green,mark=*] coordinates {(1,5)};
+%\end{axis}
+%\end{tikzpicture}
+%
+%Just as a parabola has at most 2 $x$-intercepts because a quadratic has at most 2 linear factors, a polynomial $p(x)$ of degree $n$ corresponds to a curve with at most $n$ $x$-intercepts. In addition, just as a parabola has one "hump", the graph of a polynomial with degree $n$ will have at most $n-1$ "humps". Finally, the leading coefficient determines the overall shape of the graph. If $n$ is even then $x^n\geq 0$, so as $x$ approaches $\infty$ or $-\infty$ the $ax^n$ approaches $\infty$ if $a>0$ and $-\infty$ if $a<0$. If $n$ is odd then $x^n$ approaches $\infty$ as $x$ approaches $\infty$ and $-\infty$ as $x$ approaches $-\infty$.
+% 
+%  
+% 
+% 
+% It is, in general, more difficult to graph higher degree polynomials, unless you can fully factor them and use the $x$-intercept plotting method as we did for quadratics. 
+%
+
+
+
+\subsection{Practice Problems}
+Sketch the graph of the following functions and describe any transformations:
+\begin{enumerate}
+\item $f(x)=x^2-5x-14 $ 
+\item $g(x)=\frac{1}{3}x^2+5$ 
+\item $ h(x)=\frac{1}{x}-1 $ 
+\item $f(x)=(x-2)^4$
+\item $g(x)=4(x+2)^2-3$
+\end{enumerate}
+
+
+\subsection{Solutions} 
+1.  \begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=10,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-5:10,samples=100]  {pow(x,2)-(5*x)-14};
+
+\end{axis}
+
+\end{tikzpicture} 
+\end{center}
+
+
+
+2. This is the graph of $y=x^2$ shifted up by 5 units, and scaled by a factor of $\frac{1}{3}$.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=5,ymax=9,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-4:4,samples=100]  {1/3*pow(x,2)+5};
+\end{axis}
+
+\end{tikzpicture} 
+\end{center}
+
+
+
+3. This is the graph of $y=\frac{1}{x}$ is shifted down by 1 units. \
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle,samples=200]
+\addplot[black,domain=-5:-0.5] {1/x-1};
+\addplot[black,domain=0.5:5] {1/x-1};
+\draw[red!,dashed] (axis cs:0,-10) -- (axis cs:0,10);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\newpage
+4. This is the graph of $y = x^4$ shifted right by 2 units,  
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=5,ymax=20,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-5:5,samples=100]  {pow(x-2,4)};
+\end{axis}
+\end{tikzpicture} 
+\end{center}
+
+5.This is the graph of $y=x^2$ shifted left by 2 units, shifted down by 3 units, and scaled by a factor of 4.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=0,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[black,domain=-10:0,samples=100]  {4*pow(x+2,2)-3};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\section{Inequalities in $\mathbb{R}^2$ }
+
+In this section we discuss graphing the solution set to an inequality like $y \leq f(x)$, or $y \geq f(x)$, where $f$ is a function.  The solution set is the set of all points for which the inequality is true.  The material in this section is very 
+similar to our previous work on graphing the solution set to inequalities involving rational expressions.
+
+The graph of a function $f(x)$ is the set of all points $(x, y)$ such that $y = f(x)$.  
+It partitions the plane into two regions.  
+The same inequality holds for all points in the same region.
+Hence what we need to do is sketch the graph of $y = f(x)$, pick a test point in each region and check which inequality holds, and then be careful about whether the points on the graph need to be included.
+
+%\begin{example}
+%Graph the solution set to the 
+%On the real line, the inequality $x>-2$ corresponds to the interval $(-2,\infty)$. In the plane $\mathbb{R}^2$, however, the inequality $x>-2$ corresponds to the set $\{(x,y):x>-2\}$. We can represent this set graphically by shading the appropriate region of $\mathbb{R}^2$. \\
+%\begin{center}
+% \begin{tikzpicture}[scale=0.5, transform shape]
+%    \draw[gray!50, thin, step=0.5] (-3,-3) grid (5,4);
+%    \draw[very thick,->] (-3,0) -- (5.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,-3) -- (0,4.2) node[above] {$y$};
+%
+%    \foreach \x in {-3,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-3,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%\draw [dashed] (-2,-3) -- (-2,4);
+%
+%    \fill[blue!50!cyan,opacity=0.3] (-2,4) -- (5,4) -- (5,-3)--(-2,-3) -- cycle;
+%
+%\end{tikzpicture}
+%\end{center}
+%\item The dotted line indicates that points of the form $(-2,y)$ are not included in the set. 
+%
+%
+%\end{itemize}
+
+\begin{example}
+Graph the solution set of $y \leq 3x-5$.
+\normalfont
+
+The solution set is $\left\{(x,y): y \leq 3x - 5 \right\}$.
+
+The first step is to sketch the graph of (the line) $y = 3x - 5$.
+All points on the line belong to the solution set, so we draw a solid line (otherwise, 
+we would draw a dashed line).
+
+The next step is to pick a (convenient) test point in each region.
+In the leftmost region, we pick $(0, 0)$ as the test point.
+Since $0 > 3\cdot 0 - 5$, no points in this region belong to the
+solution set.
+In the rightmost region, we pick $(4, 0)$ as the test point.
+Since $0 < 3\cdot 4 - 5$, all points in this region belong to the solution set.
+
+A graph of the solution set is shown below.  The collection of points in the solution
+set and not on the line is shaded (blue).  The line is drawn solid to indicate
+that the points on the line are in the solution set (as indicated above).
+
+ \begin{center}
+\begin{tikzpicture}[scale=0.5]
+    \draw[gray!50, thin, step=0.5] (-3,-3) grid (5,5);
+    \draw[very thick,->] (-3,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,-3) -- (0,5.2) node[above] {$y$};
+
+    \foreach \x in {-3,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-3,...,5} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw  (2/3,-3) -- (10/3,5);
+
+    \fill[blue!50!cyan,opacity=0.3] (2/3,-3) -- (5,-3)--(5,5) -- (10/3,5) -- cycle;
+
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+
+\begin{example}
+Graph the solution set of $y > x^2 -6x + 8$.
+
+\normalfont
+The solution set is $\left\{(x, y): y > x^2 -6x + 8 \right\}$.
+
+The first step is to sketch the graph of $y = x^2 -6x + 8$.
+We know it is a parabola, and since $ x^2 -6x + 8 = (x-2)(x-6)$,
+it crosses the $x$ axis at 2 and 4, and has its vertex at $x=3$.
+By computation, the $y$-coordinate of the vertex is $-1$.
+Since $y = x^2 -6x + 8$ for every point on the graph, no points on
+the parabola belong to the solution set and so we sketch the parabola with a dashed line.
+
+The next step is to pick a test point in each region: inside the parabola and outside of it.
+For the region outside the parabola we pick $(0, 0)$ as the test point.
+Since $0 < 8$, no points in this region belong to the solution set.
+For the region inside the parabola, we pick $(3, 0)$ as the test point.
+Since $0 > -1$, all points in this region are in the solution set.
+
+A graph of the solution set is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+grid=both,
+          xmax=8,ymax=5,
+          axis lines=middle,
+          enlargelimits,
+xlabel=$x$,ylabel=$y$
+]
+\addplot[dashed,domain=0:6,samples=100, name path=a]  {pow(x,2)-6*x+8};
+\addplot[draw=none, domain =0:6, samples=100, name path=b] {6};
+\addplot[fill=none] fill between[of = a and b, split, every segment no 1/.style={fill, blue!50!cyan,opacity=0.3},];
+
+\end{axis}
+\end{tikzpicture}\\
+
+\end{center}
+\end{example}
+
+%\item Represent the set $\{(x,y): y \leq -3x + 1\} $ graphically. \\
+%Again, every point on the line $y=3x-5$ satisfies the inequality $y\leq 3x-5$. We must determine which region is in the set.
+%Since $ 0 \leq -3(0) +1 $, $(0,0)$ is in the set.\\
+% \begin{center}
+%\begin{tikzpicture}[scale=0.5]
+%    \draw[gray!50, thin, step=0.5] (-3,-3) grid (5,3);
+%    \draw[very thick,->] (-3,0) -- (5.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,-3) -- (0,3.2) node[above] {$y$};
+%
+%    \foreach \x in {-3,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-3,...,3} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%\draw [dashed] (1.5,-3) -- (3,3);
+%
+%    \fill[blue!50!cyan,opacity=0.3] (1.5,-3) -- (3,3)--(5,3) -- (5,-3) -- cycle;
+%
+%\end{tikzpicture}
+%\end{center}
+%
+%\item Represent the set $\{(x,y): y \leq 4x \} $ graphically. \\
+%Notice that every point on the line $y=4x$ satisfies the inequality $y\leq 4x$ and we must determine which of the regions partitions bythe line $y=4x$ is in the set. We cannot use $(0,0)$ as a test point because it lies on the boundary line. So pick another point off the line, for example use $(0,1)$ as the test point. \\
+%Since $ 1 \leqslant 4(0) +1 $, $(0,1)$ is in the set.\\
+% \begin{center}
+% \begin{tikzpicture}[scale=0.5]
+%    \draw[gray!50, thin, step=0.5] (-5,-5) grid (5,5);
+%    \draw[very thick,->] (-5,0) -- (5.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,0) -- (0,5.2) node[above] {$y$};
+%
+%    \foreach \x in {-5,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {0,...,5} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%\draw  (-5/4,-5) -- (5/4,5);
+%
+%    \fill[blue!50!cyan,opacity=0.3] (-5/4,-5) -- (5/4,5)--(-5,5) -- (-5,0)--(-5,-5) -- cycle;
+%
+%\end{tikzpicture}
+%\end{center}
+%
+%
+%
+%\end{itemize}
+%\end{example}
+
+\subsection{Exercises}
+
+\begin{enumerate}
+\item Graph $\{(x,y):y < 4x-9\}$.
+\item Graph the solution set to $y> \frac{1}{3}x+4$.
+\item Graph  $\{(x,y): y \geq 8x \}$. 
+\item Graph the solution set to $y>x^2 + 2x + 5$ . %Changed Aug 18 2021 to match the graph.
+\item Graph the solution set to $y<\frac{x^7 + 2x^6 + x^5}{x^5}$.
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!50, thin, step=0.5] (-3,-3) grid (5,3);
+    \draw[very thick,->] (-3,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,-3) -- (0,3.2) node[above] {$y$};
+
+    \foreach \x in {-3,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-3,...,3} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw [dashed] (1.5,-3) -- (3,3);
+
+    \fill[blue!50!cyan,opacity=0.3] (1.5,-3) -- (3,3)--(5,3) -- (5,-3) -- cycle;
+
+\end{tikzpicture}  \quad
+2.  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!50, thin, step=0.5] (-3,0) grid (5,5);
+    \draw[very thick,->] (-3,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,0) -- (0,5.2) node[above] {$y$};
+
+    \foreach \x in {-3,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {0,...,5} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw [dashed] (-3,3) -- (3,5);
+
+    \fill[blue!50!cyan,opacity=0.3] (-3,3) -- (3,5)--(-3,5) -- cycle;
+
+\end{tikzpicture} \\
+3.  \begin{tikzpicture}[scale=0.5]
+    \draw[gray!50, thin, step=0.5] (-5,-5) grid (5,5);
+    \draw[very thick,->] (-5,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,0) -- (0,5.2) node[above] {$y$};
+
+    \foreach \x in {-5,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {0,...,5} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw  (-5/8,-5) -- (5/8,5);
+
+    \fill[blue!50!cyan,opacity=0.3] (-5/8,-5) -- (5/8,5)--(-5,5) -- (-5,0)--(-5,-5) -- cycle;
+
+\end{tikzpicture}   \quad
+4.  \begin{tikzpicture}[scale=0.4]
+    \draw[thick,->] (-6,0) -- (4.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-1) -- (0,8.2) node[above] {$y$};
+
+    \foreach \x in {-5,...,4} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-1,...,8} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-3:1,dashed] plot (\x,{\x*\x+2*\x+5});
+
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-3:1] plot (\x,{\x*\x+2*\x+5}) -- (1,8) -- cycle;
+
+\end{tikzpicture}\\
+5.   \begin{tikzpicture}[scale=0.4]
+    \draw[thick,<->] (-5,0) -- (4.2,0) node[right] {$x$};
+    \draw[thick,blue, dashed, <->] (0,-5) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-5,...,4} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-5,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-3:1,dashed] plot (\x,{\x*\x+2*\x+1});
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-3:1] plot (\x,{\x*\x+2*\x+1}) -- (4,4)--(4,-5)--(-5,-5)--(-5,4) -- cycle;
+
+\foreach \point in {(0,1)}{% points
+%    \fill[color=white] \point circle (4pt);
+}
+
+
+\end{tikzpicture}
+
+Note: Because $\frac{x^7 + 2x^6 + x^5}{x^5}$ is undefined for $x=0$, we have excluded the line $x=0$ as well as the curve $y=x^2+2x+1$.
+
+\newpage
+\section{Exponential Functions}
+
+%- $x^\pi$
+
+%$2^x$ (exponential functions)
+Let $b > 0$ be a positive real number.
+In previous sections we talked about the numbers $b^r$, where $r$ is an integer or a rational number (a rational number is a fraction; a ratio of integers).
+In this section we consider numbers $b^r$, where $r$ is any real number.  
+
+The precise definition of a number like $3^{\sqrt{2}}$ is a topic in mathematical analysis, and is beyond
+the scope of these notes.  Here's a reasonable way to think about it.
+The number $\sqrt{2} = 1.4142\ldots$.
+Each of the numbers $1, 1.4, 1.41, 1.414, 1,4142, \ldots$ is rational, so the numbers
+$3^1, 3^{1.4}, 3^{1.41}, 3^{1.414}, $ $3^{1,4142}, \ldots$ are all defined.
+These numbers are approximately $3, 4.6555, 4.70697, 4.727695, 4.7287, \ldots$.
+It turns out that as the sequence of rational approximations gets ``close'' to $\sqrt{2}$,
+the sequence of exponentials gets ``close'' to a particular number, and that number is
+defined to be $3^{\sqrt{2}}$.
+
+The \textbf{properties of exponents} are the same no matter whether the exponent is an integer, a rational number or a real number:
+\begin{itemize}
+\item When exponential expressions with the same base are multiplied, simplify by adding the powers, i.e.,
+$$b^xb^y = b^{x+y}.$$
+\item When an exponential expression is itself raised to some power, simplify by multiplying the exponents, i.e., 
+$$\left(b^x\right))^y = b^{xy}.$$
+\end{itemize}
+
+When $b > 0$ we can talk about $b^x$ for any real number $x$.  (This is not true if $b < 0$. For example, remember that $(-2)^{\frac{1}{2}}$ is undefined.)
+Thus we can talk about the \textbf{exponential function with base $b$},  $f(x) = b^x$.\\
+
+
+\noindent
+\textbf{Properties of} $f(x)=b^x$, where $b>0$.
+\begin{itemize}
+\item The domain of $f(x)$ is the set of all real numbers.
+\item Since $b^0 = 1$, the graph of $f(x)=b^x$ always contains the point $(0, 1)$.
+\item There is no $x$ such that $b^x = 0$, and in fact $b^x > 0$ for every real number $x$.
+\item If $b > 1$, then $b^x$ gets larger and larger as $x$ moves to the right on the $x$-axis, and
+gets close to zero as $x$ moves to the left on the $x$-axis, and .  (The first part is easy to see.  To see the second part, think about the sequence of powers $b^{-1}, b^{-2}, \ldots = \frac{1}{b}, \frac{1}{b^2}, \ldots$;  the denominators  of the fractions get larger as the exponents do.) 
+\item If $0 < b < 1$, then $b^x$ decreases towards 0 
+as $x$ gets large, and gets larger and larger as $x$ gets small.  The reasoning is the similar
+to the reasoning above because $\frac{1}{b} > 1$.
+\item The range of $f(x) = b^x$ is the $(0, \infty)$.
+%\item If $0<b<1$ then the graph of $b^x$ will decrease as we move from left to right. 
+%\item If $b>1$ then the graph of $b^x$ will increase as we move from left to right. 
+\end{itemize}
+
+
+The graph of $f(x) = 2^x$ is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=4,ymax=18,
+          axis lines=middle,
+          restrict y to domain=-7:18,
+          enlargelimits]
+\addplot[black]  {pow(2,x)} node[above]{$y=2^x$};
+ \addplot[black,mark=*] coordinates {(0,1)} node[below]{$(0,1)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The \textbf{natural exponential function} is  is $f(x) = e^x$, where $e \approx 2.718$.  The reasons
+why this function is important are best explain in calculus.  The graph of $f(x) = e^x$ is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=4,ymax=20,
+          axis lines=middle,
+          restrict y to domain=-7:25,
+          enlargelimits]
+\addplot[black]  {pow(e,x)} node[above]{$y=e^x$};
+ \addplot[black,mark=*] coordinates {(0,1)} node[below]{$(0,1)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\newpage
+When $0 < b < 0$ the graph of $f(x) = b(x)$ has a different shape.  As noted above, it decreases towards 0 
+as $x$ gets large, and gets larger and larger as $x$ gets small.    The graph of $f(x) = \left(\frac{1}{2}\right)^x$ is shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=6,ymax=18,
+          axis lines=middle,
+          restrict y to domain=-7:18,
+          enlargelimits]
+\addplot[black]  {pow(0.5,x)} node[above]{$y=\left(\frac{1}{2}\right)^x$};
+ \addplot[black,mark=*] coordinates {(0,1)} node[below]{$(0,1)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The principles of shifting or stretching graphs apply to the graph of any function, so in particular 
+they apply to the graph of exponential functions.
+
+\begin{example}
+Sketch the graph of $f(x) = -e^{\frac{1}{3}x} + 2$.
+
+\normalfont
+The graph is similar to the graph of $y = e^x$, except that it is inverted (the height is scaled by -1), shifted 2 units up, stretched by a factor of 3.  After plotting a few points and sketching a curve of the correct shape through them, one 
+arrives at the graph below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=11,ymax=4,
+          axis lines=middle,
+          restrict y to domain=-30:20,
+          enlargelimits]
+\addplot[black, domain=-11:10]  {(-1)*pow(e,x/3) + 2} node[left]{$y= -e^{\frac{1}{3}x} + 2$};
+ \addplot[black,mark=*] coordinates {(0,1)} node[below]{$(0,1)$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+\bigskip
+\begin{example}
+Find the positive number $x$  such that $x^{\sqrt{2}} = 3^5$.
+
+\normalfont
+We have $x^{\sqrt{2}} = 3^5$, so $\left(x^{\sqrt{2}}\right)^{\sqrt{2}} = \left(3^5\right)^{\sqrt{2}}$.
+From the properties of exponents, this is the same as $x^2 = 3^{5 \sqrt{2}}$.
+Since $x$ is positive, 
+$$x = \sqrt{3^{5 \sqrt{2}}} = \left(3^{5 \sqrt{2}}\right)^{\frac{1}{2}} = 3^{\frac{5}{2}\sqrt{2}}.$$
+The number  $ 3^{\frac{5}{2}\sqrt{2}} \approx 48.627$.
+
+\end{example}
+
+
+
+
+\subsection{Practice Problems}
+\begin{enumerate}
+\item Using $ f(x) = 4^x$, find: 
+\begin{enumerate}
+\item $f(-2)$ 
+\item $f(x)$ when $ x = 1$ 
+\item $f(3/2)$ 
+\end{enumerate}
+\item Using $ f(x) = (1/3)^x$, find: 
+\begin{enumerate}
+\item $f(0)$ 
+\item $f(3)$ 
+\item $f(-3)$ 
+\end{enumerate}
+\item Sketch the following functions on the same graph
+\begin{enumerate}
+\item $f(x)=3^x$ 
+\item $g(x)=(\frac{1}{3})^x$ 
+\end{enumerate}
+\item Find the positive number $x$  such that $x^{\sqrt{3}} = 8^2$.
+\item Sketch the graph of $ h(x)=1-3e^{x+2}$.
+\end{enumerate}
+
+
+\subsection{Solutions}
+\begin{enumerate}
+\item 
+\begin{enumerate}
+\item $1/16$ 
+\item $4$
+\item $8$ 
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item $1$ 
+\item $1/27$
+\item $27$ 
+\end{enumerate}
+\item The graphs are shown below. \\
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=10,ymax=10,
+          axis lines=middle,
+          restrict y to domain=-7:12,
+          enlargelimits]
+\addplot[green]  {pow(3,x)} node[above]{$y=3^x$};
+\addplot[blue]  {pow(1/3,x)} node[above]{$y=(\frac{1}{3})^x$};
+\end{axis}
+\end{tikzpicture}
+\item $x=8^{\frac{2}{3}\sqrt{3}} = 4^{\sqrt{3}}$\\
+\item $ $\\\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=10,ymax=5,
+          axis lines=middle,
+          enlargelimits]
+\addplot[blue]  {1-(3*pow(e,(x+2)))} node[above]{$h(x)=1-3e^{x+2}$};
+\end{axis}
+\end{tikzpicture}
+\end{enumerate}
+
+\chapter{Module 4}
+
+\section{Function Composition}
+
+Suppose $f$ and $g$ are functions, and that the domain of $g$ contains all real numbers in the range of $f$.
+We can then `chain' the two functions together and get a new function by first evaluating $f$ at $x$, and then evaluating $g$ at $f(x)$.  This new function is called the \textbf{composition} of $f$ and $g$, and is denoted by $(g \circ f)$.  The formal definition is 
+$$(g \circ f)(x) = g(f(x)).$$
+
+As with other functions, the domain of $(g\circ f)$ is taken to be the largest set of real numbers
+for which the function is defined.  This is the set of all $x$ such that $x$ is in the domain of $f$ and $f(x)$ is in the domain of $g$ (because first $f$ is evaluated at $x$, and then $g$ is evaluated at $f(x)$).
+
+
+%\begin{itemize}
+%%\item The composite function $f \circ g$ of two functions $f$ and $g$ is defined by $ (f\circ g)(x) = f(g(x))$ 
+%%\item This is NOT to be confused with multiplication.
+%\item The domain of $(f\circ g)(x)$ is the set of all $x$ in the domain of $g$ such that $g(x)$ is in the domain of $f$.
+%\end{itemize}
+
+\begin{example}
+Let  $f(x) = 3x -1$ and $g(x) = x^2 + 1$.  Then:
+
+\normalfont
+\begin{itemize}
+\item $f(2) = 3(2) -1 = 6-1 = 5$ and $g(2) = 2^2+1 = 4+1 =5$.
+\item $(g \circ f)(2) = g(f(2)) = g(5) = 26$.
+\item $(f \circ g)(2) = f(g(2)) = f(5) = 14$.
+\item Note: the previous two bullet points imply that $(g \circ f)(x)$ is not necessarily equal
+to $(f \circ g)(x)$.  The order in which functions are composed matters!
+\item $(g\circ f)(y) = g(f(y)) = g(3y-1) = (3y-1)^2 + 1 = 9y^2-6y + 1 + 1 = 9y^2-6y + 2$
+\item $(f\circ g)(x) = f(g(x)) = f(x^2 + 1) = 3(x^2 + 1) - 1 = 3x^2 + 3 -1 = 3x^2 +2$
+\item Both $(g \circ f)$ and $(f \circ g)$ have domain equal to the set of all real numbers.
+\end{itemize}
+\end{example}
+
+
+%\begin{example}
+%Using the following functions: $f(x)=3x+5$ and $g(x) = \frac{x^2+1x+2}{x}$
+%\begin{itemize}
+%\item $f(x)\circ g(x)$ and state the domain
+%\item $g(x)\circ f(y)$ and state the domain
+%\end{itemize}
+%\end{example}
+
+\begin{example}
+Let: $f(x)=\sqrt{x+2}$ and $g(x) = {3-x}$.  Determine the domain of $(g \circ f)$, 
+the domain of $(f \circ g)$ and an expression for each of these functions.
+\normalfont
+
+First, note that the domain of $f$ is $[-2,\infty)$, and the domain of $g$ is the set of all real numbers.
+
+The domain of $(g \circ f)$ is the set of all $x$ such that $x$ is in the domain of $f$ and $f(x)$ is in the domain of $g$.  This is $[-2,\infty)$  because $x$ must belong to  the domain of $f$, and since the domain of $g$ is the set of all real numbers, for any such $x$ the number $f(x)$ is in the domain of $g$.
+
+We have $$(g \circ f)(x) = g(f(x)) = g(\sqrt{x+2}) = 3 - \sqrt{x+2}.$$
+
+The domain of $(f \circ g)$ is the set of all $x$ such that $x$ is in the domain of $g$ and $g(x)$ is in the domain of $g$.  The domain of $g$ is the set of all real numbers, so now we need to determine which of these are such that $g(x) = 3-x$ is in $[-2, \infty)$, the domain of $f$.  This happens when $3 - x \geq -2$, that is, when $x \leq 5$.
+Therefore the domain of $(f \circ g)$ is $(-\infty,5]$. 
+
+We have $$(f\circ g)(x)=f(g(x)) = f(3-x) = \sqrt{(3-x)+2}=\sqrt{5-x}.$$
+
+\end{example}
+
+A skill that is useful in calculus is recognizing when a function can be expressed as a composition of two other functions.
+
+\begin{example} Suppose $h(x) = (x^3-1)^7+2$.  Find functions $f$ and $g$ such that $h = (g \circ f)$.
+
+\normalfont
+Looking at the expression of $h(x)$, it is an expression raised to the power 7, plus 2.  
+Thus it makes sense to take $f(x)$ to be that expression, i.e., $f(x) = x^3 - 1$, 
+and $g(x)$ to be a function that raises its input to the seventh power and then adds two, i.e., $g(x) = x^7 + 2$.
+
+As a check, we can compute
+$$(g \circ f)(x) = g(f(x)) = g(x^3 - 1) = (x^3-1)^7+2 = h(x).$$
+
+\end{example}
+
+
+
+\subsection{Practice Problems}
+\begin{enumerate}
+\item Let $f(x)=3x+5$, $g(x) = \frac{x^2+1x+2}{x}$ and $h(x)=\sqrt{x+7}$.
+\begin{enumerate}
+ \item Find a formula for $(f\circ g)(x)$.  What is the domain of $(f\circ g)(x)$?
+ \item Find a formula for $(g\circ f)(x)$. What is the domain of $(g\circ f)(x)$?
+\item Find a formula for $(f\circ h)(x)$ .What is the domain of $(f\circ h)(x)$?
+\item Find a formula for $(h\circ f)(x)$. What is the domain of $(h\circ f)(x)$?
+\item  Find a formula for $(h\circ g)(x)$ What is the domain of $(h\circ g)(x)$?
+\end{enumerate}
+% Make this a problem .... the first of these is in fact |x|
+%
+%\textbf{Note:} $\sqrt{x^2}$ and $\sqrt{x}^2$ are not the same function in terms of domain. One has a domain of $(-\infty,\infty)$ and the other has a domain of $[0,\infty)$. 
+%
+\item Let $f(x)=\sqrt{x}$ and $g(x)=x^2$.
+\begin{enumerate}
+\item Find a formula for $(f\circ g)(x)$.  What us the domain of $(f\circ g)(x)$?
+\item Find a formula for $(g\circ f)(x)$.  What us the domain of $(g\circ f)(x)$.
+\item  Do the functions in (a) and (b) have the same domain? What does this tell you?
+\end{enumerate}
+
+\item Fund functions $f(x)$ and $g(x)$ so that $(g \circ f)(x) = 3e^{2x-4} + x$.
+\end{enumerate}
+
+\subsection{Solutions} 
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item $(f\circ g)(x)=\frac{3x^2+8x+6}{x}$, Domain: $\{x:x\neq 0\}$.
+\item $(g\circ f)(x)=\frac{9x^2+33x+32}{3x+5}$, Domain: $\{x:x\neq -\frac{5}{3}\}$.
+\item $(f\circ h)(x)=3\sqrt{x+7}+5$, Domain: $\{x:x\geq-7\}$.
+\item $(h\circ f)(x)=\sqrt{3x+12}$, Domain: $\{x:x\geq-4\}$.
+\item $(h\circ g)(x)=\sqrt{\frac{x^2+1x+2}{x}+7}$, Domain: $\{x:-4-\sqrt{14}\leq x\leq\sqrt{14}-4$ or $x>0\}$.
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item $(f\circ g)(x)=\sqrt{x^2}$, Domain:$(-\infty,\infty)$.
+\item $(g\circ f)(x)=(\sqrt{x})^2$, Domain:$[0,\infty)$.
+\item They are not the same, and therefore the two functions are not the same.
+\end{enumerate}
+
+\item $f(x) = 2x-4$ and $g(x) = 3e^x + \frac{x+4}{2}$.
+\end{enumerate}
+
+\newpage
+\section{Inequalities Involving Rational Functions}
+
+%The solution set to the inequality $y\geq x^2 +4x-21$ is a set of points in $\mathbb{R}^2$.  
+%We can represent that set graphically. 
+%Since 
+%First notice that any point $(x,y)$ such that $y= x^2 +4x-21$ is included in the set, 
+%which means the parabola graphed below is included.
+%
+%\begin{tikzpicture}[scale=0.5]
+%\begin{axis}[grid=both,
+%         xmin=-8, xmax=5,
+%          axis lines=middle]
+%\addplot[blue, domain=-8:5] {pow(x,2)+4*x-21};
+%\end{axis}
+%\end{tikzpicture}
+%
+%Just as with linear inequalities, this parabola partitions the plane into two regions; one is included in the set and the other is not. By testing the point $(0,0)$ we can determine which: $0\geq0^2+4(0)-21$, so the region containing $(0,0)$ is in the set.
+%
+%Inequalities involving higher-degree polynomials behave in the same way. We can also consider inequalities that involve rational functions.
+
+In this section we discuss graphing the solution to inequalities like $y > \frac{x+1}{x-1}$ or, more generally, $y > f(x)$, where $f(x)$ is a rational function.
+The graph of $y = f(x)$, together with the vertical lines at the points where $f$ is undefined, partition the plane into several regions.  As before, in each region either all points satisfy the inequality or none do.  Thus our method is:
+\begin{itemize}
+\item Find the domain of $f$.
+\item Sketch the graph of $y = f(x)$.  Use a solid line if the points on the graph belong to the solution set, and a dashed line if not.
+\item Pick a test point in each region and determine the regions for which every point belongs to the solution set, then shade these regions on the graph.
+\end{itemize}
+
+\begin{example}
+Graph the solution set to $y < \frac{x+1}{x-5}$.
+\normalfont
+
+The solution set is $\left\{(x,y): y < \frac{x+1}{x-5}\right\}$.
+
+The domain of $f(x) = \frac{x+1}{x-5}$ is the set of all real numbers except 5.
+
+By plotting a few well-chosen points and being careful what happens as $x$ gets large, small, or near the vertical line $x = 5$, we arrive a sketch like the one shown below.  The graph is drawn with a dashed line because no
+points on the graph belong to the solution set.
+
+The vertical line $x = 5$ is included in the picture because it is involved in partitioning the plane into regions.  It is drawn as a dashed line because 
+$\frac{x+1}{x-5}$ is undefined at $x=5$, hence $x = 5$ can not belong to the solution set.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle,samples=200]
+\addplot[black,dashed, domain=-2.5:4.5] {(x+1)/(x-5) };
+\addplot[black,dashed, domain=5.5:11] {(x+1)/(x-5)};
+\draw[black,dashed] (axis cs:5,-12) -- (axis cs:5,15);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The plane is now partitioned into 4 regions: above and below each curve, and on each side of the line $x = 5$.
+
+For the region below the leftmost curve we choose $(-3, 0)$ as the test point.
+Since $0 < \frac{-2}{-8}$, all points in this region belong to the solution set.
+
+For the region above the leftmost curve and left of the line $x = 5$, we choose $(0, 0)$ as the test point.
+Since $0 > \frac{1}{-5}$, no  points in this region belong to the solution set.
+
+For the region below the rightmost curve and right of the line $x = 5$, we choose $(6, 0)$ as the test point.
+Since $ 0 < \frac{7}{1}$, all points in this region belong to the solution set.
+
+For the region above the rightmost curve and right of the line $x = 5$, we choose $(8, 8)$ as the test point.
+Since $8 < \frac{9}{3}$, no  points in this region belong to the solution set.
+
+Finally, we shade the regions for which all points belong to the solution set.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.4]
+\draw[red!,dashed] (5,-8) -- (5,10.2);
+    \draw[thick,->] (-5,0) -- (11.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-8) -- (0,10.2) node[above] {$y$};
+
+    \foreach \x in {-3,...,10} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-8,...,11} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-3:4.33,dashed] plot (\x,{(\x+1)/(\x-5)});
+\draw[color=blue,domain=5.65:11,dashed] plot (\x,{(\x+1)/(\x-5)});
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=5.65:11] plot (\x,{(\x+1)/(\x-5)}) -- (11,-8)--(5.1,-8)--(5.1,10.2) -- cycle;
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-5:4.25] plot (\x,{(\x+1)/(\x-5)}) --(4.5,-8)-- (-5,-8) -- cycle;
+
+%\foreach \point in {(-2,0),(0,0),(6,0),(8,8)}{% points
+%    \fill \point circle (4pt);
+%}
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+
+
+\subsection{Practice Problems}
+Graph the solution set to the following:
+\begin{enumerate}
+\item  $y\geq \frac{x+2}{x-3} $
+\item $y \leq \frac{5x+2}{x+7} $  
+\item $y<\frac{1}{x}+1$
+\item $y < \frac{x-2}{x+3}$
+\end{enumerate}
+
+
+
+\subsection{Solutions} 
+\begin{enumerate}
+\item Solution set: 
+
+\begin{tikzpicture}[scale=0.4]
+\draw[red!,dashed] (3,-5) -- (3,8);
+    \draw[thick,->] (-5,0) -- (8.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-5) -- (0,8.2) node[above] {$y$};
+
+    \foreach \x in {-5,...,8} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-5,...,8} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-5:2.20] plot (\x,{(\x+2)/(\x-3)});
+\draw[color=blue,domain=3.718:8] plot (\x,{(\x+2)/(\x-3)});
+
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=3.718:8] plot (\x,{(\x+2)/(\x-3)}) -- (8,8)--(4,8) -- cycle;
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-5:2.2] plot (\x,{(\x+2)/(\x-3)}) --(3,-5)--(3,8)-- (2.25,8)--(-5,8) -- cycle;
+
+
+
+\end{tikzpicture}
+
+\item Solution set: 
+
+\begin{tikzpicture}[scale=0.4]
+\draw[red!,dashed] (-7,-5) -- (-7,20);
+    \draw[thick,->] (-11,0) -- (2.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-5) -- (0,20.2) node[above] {$y$};
+
+    \foreach \x in {-11,...,2} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-5,...,20} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-11:-9.20] plot (\x,{(5*\x+2)/(\x+7)});
+\draw[color=blue,domain=-3.8:2] plot (\x,{(5*\x+2)/(\x+7)});
+
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-3.8:2] plot (\x,{(5*\x+2)/(\x+7)}) --(2,-5) -- cycle;
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-11:-9.2] plot (\x,{(5*\x+2)/(\x+7)}) --(-7,20)--(-7,-5)--(-11,-5) -- cycle;
+
+
+
+\end{tikzpicture}
+
+\item Solution set: 
+
+ \begin{tikzpicture}
+\draw[red!,dashed] (0,-2) -- (0,4);
+    \draw[thick,->] (-4,0) -- (4.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-2) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-4,...,4} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-2,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-4:-0.35,dashed] plot (\x,{1/\x+1});
+\draw[color=blue,domain=0.4:4,dashed] plot (\x,{1/\x+1});
+
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=0.4:4] plot (\x,{1/\x+1}) -- (4,1)--(4,-2)--(0,-2)--(0,4)--(0.4,4) -- cycle;
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-4:-0.4] plot (\x,{1/\x+1}) --(-0.4,-2)--(-4,-2)--(-4,1)-- cycle;
+
+
+
+\end{tikzpicture}
+
+
+\item Solution set: 
+
+ \begin{tikzpicture}[scale=0.4]
+\draw[red!,dashed] (-3,-5) -- (-3,8);
+    \draw[thick,->] (-6,0) -- (8.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-5) -- (0,8.2) node[above] {$y$};
+
+    \foreach \x in {-6,...,8} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-5,...,8} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=blue,domain=-6:-3.7,dashed] plot (\x,{(\x-2)/(\x+3)});
+\draw[color=blue,domain=-2.2:8,dashed] plot (\x,{(\x-2)/(\x+3)});
+
+
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-2.2:8] plot (\x,{(\x-2)/(\x+3)}) -- (8,-5) -- cycle;
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=-6:-3.7] plot (\x,{(\x-2)/(\x+3)}) --(-3,8)--(-3,-5)--(-6,-5) -- cycle;
+
+\end{tikzpicture}
+
+\end{enumerate}
+\vfill
+
+\newpage
+\section{Inverse functions}
+A pair of functions $f$ and $g$ with the property that $f(x) = y$ if and only if $g(y) = x$ are 
+called \textbf{inverses}.  
+
+Informally, if $f$ and $g$ are inverses, then $g$ ``undoes'' $f$ by sending $y$ back to $x$. Similarly, $f$ ``undoes'' $g$.  A more formal way to state this involves function composition: if $f$ and $g$ are inverses, then
+$$(g \circ f)(x) = g(f(x)) = g(y) = x$$
+by definition, and similarly 
+$$(f \circ g)(y) = f(g(y)) = f(x) = y.$$
+
+If $f$ and $g$ are inverses, then $g$ is called the \textbf{inverse function} of $f$, and denoted by $f^{-1}$.  We could also call $f$ the inverse function of $g$, and  denote it by $g^{-1}$.
+
+If $f$ and $g$ are inverses, then the range of $f$ must be the same as the domain of $g$, and the range of $g$ must be the same as the domain of $f$.  Furthermore, there can not be different real numbers $x_1$ and $x_2$ such that $f(x_1) = f(x_2) = y$ for some real number $y$ because we would need to have $g(y)$ equal to both $x_1$ and $x_2$, which is impossible because $g$ is a function.  Similarly, there can not be different real numbers $y_1$ and $y_2$ such that $g(y_1) = g(y_2) = x$ for some real number $x$.
+
+Not every function has an inverse.  For example, $f(x) = x^2$ does not have an inverse because $f(1) = f(-2)$.
+
+\begin{example}
+Show that the functions $f(x) = 3x-6$ and $g(x) = \frac{x+ 6}{3}$ are inverses.
+\normalfont
+
+We need to show that $f(x) = y$ if and only if $g(y) = x$.
+
+Suppose that $f(x) = y$.  Then $y = 3x-6$.  Thus 
+$$g(y) = g(3x-6) = \frac{(3x-6)+6}{3} = x,$$
+as required.
+
+Now suppose that $g(y) = x$.  Then $x = \frac{y+ 6}{3}$.  Thus
+$$f(x) = f(\frac{y+ 6}{3}) = 3\left(\frac{y+ 6}{3}\right) - 6 = y,$$
+as required.
+
+Therefore $f$ and $g$ are inverses.
+\label{ex5,1}
+\end{example}
+
+In Example 1, notice that the inverse of $f$ is described by the expression obtained by solving the equation 
+$y = f(x)$ for $x$.   If $y = f(x)$ then $y = 3x-6$.  That means $y+6 = 3x$, and so $x = \frac{y+6}{3} = g(y)$.  
+This computation can be viewed as telling us what $x$ needs to be in order for $f(x) = y$ to be true.
+Similarly, the inverse of $g$ is described by the expression obtained by solving the equation $x = g(y)$ for $y$.
+
+\begin{example}
+Let $f(x) = \frac{2x}{4x-1}$.  Find the inverse of $f$, if it exists.
+
+\normalfont
+The domain of $f$ is the set of all real numbers except $\frac{1}{4}$.  To find an expression for the inverse of $f$, if it exists, we need to solve the equation $y = f(x)$ for $x$.
+
+If $y = f(x)$, then $y = \frac{2x}{4x-1}$ and $x \neq \frac{1}{4}$.
+Thus $y(4x-1) = 2x$, so $4xy - y = 2x$.
+This equation can be rearranged to obtain $y = 4xy - 2x = x(4y-2)$, so that $x = \frac{y}{4y-2}$.
+
+Therefore, if $f$ has an inverse, it is $g(y) =  \frac{y}{4y-2}$.
+The domain of $g$ is the set of all real numbers except $\frac{1}{2}$.
+We need to check that $f(x) = y$ if and only if $g(y) = x$.
+
+Suppose $f(x) = y$.  Then $y = \frac{2x}{4x-1}$ and $x \neq \frac{1}{4}$, so that 
+$$g(y) = g\left(\frac{2x}{4x-1}\right) = \frac{\frac{2x}{4x-1}}{4\frac{2x}{4x-1} - 2}
+=  \frac{\frac{2x}{4x-1}}{4\frac{2x}{4x-1} - 2\frac{4x-1}{4x-1}} 
+= \frac{ \left(\frac{2x}{4x-1}\right) }{ \left(\frac{2}{4x-1}\right)}  = x.
+$$
+
+Now suppose that $g(y) = x$.
+Then $x = \frac{y}{4y-2}$ and $y \neq \frac{1}{2}$, so that
+$$
+f(x) = f\left(\frac{y}{4y-2}\right) = \frac{ 2\frac{y}{4y-2} } { 4 \frac{y}{4y-2} - 1 }
+= \frac{ \frac{2y}{4y-2} } { 4 \frac{y}{4y-2} - \frac{4y-2}{4y-2} }
+= \frac{ \frac{2y}{4y-2} } { 4 \frac{y}{4y-2} - \frac{4y-2}{4y-2} }
+= \frac{ \left( \frac{2y}{4y-2} \right) } {\left( \frac{2}{4y-2} \right)} = y.
+$$
+Therefore, $f$ has an inverse, and is the function $g$.
+That is, $f^{-1}(y) = \frac{y}{4y-2}$.
+\end{example}
+
+
+%\begin{example}
+%$ $
+%Find the inverses of the following functions:
+%\begin{itemize}
+%\item $f(x) = \frac{2x}{4x-1}, x \neq \frac{1}{4}$ 
+%\begin{itemize}
+%\item $x = \frac{2y}{4y-1}$
+%\item $x(4y-1) = 2y$
+%\item $4xy - x = 2y$
+%\item $4xy-2y = x$
+%\item $y(4x-2) = x$
+%\item $y = \frac{x}{4x-2}$
+%\item $f^{-1}(x) = \frac{x}{4x-2}, x \neq \frac{1}{2}$
+%\end{itemize}
+%\item $f(x) =ln(5x-2) $
+%\begin{itemize}
+%%\item $x =ln(5y-2)$
+%%\item $e^x = 5y-2 $
+%%\item $e^x +2 = 5y$
+%%\item $y = \frac{e^x +2}{5}$
+%\item $f^{-1}(x) = \frac{e^x +2}{5}$
+%\end{itemize}
+
+\begin{example}
+Let $f(x) = x^2 + 1$.  Find the inverse of $f$, if it exists.
+
+\normalfont
+We could possibly observe right away that $f(1) = f(-2) = 2$, which means that $f$ can not have an inverse.
+If we were lucky enough to see that, then there is nothing more to do.
+If we weren't, then we could proceed as above and try to solve $y = f(x)$ for $x$.
+Doing that leads to $x =  \pm \sqrt{y-1}$, which tells us there may be two different values of $x$ 
+that give the same value of $y$.  For example, if we choose $y = 2$, then the equation says 
+we must have $x = \pm 1$, that is, that $f(1) = f(-1) = 2$.
+
+\label{ex5.3}
+\end{example}
+
+
+The lesson from  Example \ref{ex5.3} is that, if it is not possible to see right away whether $f$ has an inverse, 
+then we can proceed by trying to find one on the assumption that it exists.
+Either that will be successful, or the calculation will reach a point where 
+it becomes clear that there are two different values of $x$ 
+that give the same value of $y$.
+In the first case, $f$ has an inverse described by the expression obtained.
+In the second case, $f$ does not have an inverse.
+
+%\item Find the inverse function of $y = x^2 + 1$, if it exists.
+%\begin{itemize}
+%\item $x =y^2+1$
+%\item $ \pm \sqrt{y-1}=x $
+%\end{itemize}
+%While we did solve for $x$, we don't get a unique $x$. Any given $x$-value corresponds to two different $y$-values, one from the positive square root and the other from the negative. Since we do not get exactly one $y$-value such that $ f^{-1}(y)=x $,  the inverse does not exist. 
+%
+%
+%\end{itemize}
+%\end{example}
+
+
+
+\newpage
+\subsection{Practice Problems}
+Find the inverse, when it exists.
+\begin{enumerate}
+\item $ y=x^4$ 
+\item $  y=7x-3$ 
+\item $y = \frac{2x}{4x-1}, x \neq \frac{1}{4} $ 
+\item $y=\sqrt{x-5} $ 
+\item $y=2-x^3 $ 
+\end{enumerate}
+
+\subsection{Solutions} 
+1. An inverse does not exist.  \ \quad
+2. $y=\frac{x+3}{7}$  \ \quad
+3. $ y=\frac{x}{4x-2}, x \neq \frac{1}{2}$  \ \quad
+4. $y=x^2+5$  \ \quad
+5.$y=\sqrt[3]{2-x}$
+
+\newpage
+\section{Logarithms}
+
+From our previous work, we know that if $b > 0$ then the range of the exponential function $f(x) = b(x)$
+is the positive real numbers.
+If $b > 0$ then the graph of $f$ increases as we move right on the $x$ axis, and if $0 < b < 1$ then it increases as we move left on the $x$-axis.
+(The function $f(x) = b^x$ is not very exciting if $b = 1$.)
+In either case, that means for any positive real number $y$ there exists a unique real number $x$ such that $b^x = y$.
+This number is \textbf{the base-$b$ logarithm of $y$}, and denoted by $\log_b(y)$.
+That is, if $b > 0$ and $b \neq 1$, then $\log_b(y)$ is the power to which $b$ must be raised in
+order to get the positive number $y$.
+
+It is important to notice that $\log_b(y)$ is only defined for positive numbers $y$.
+Logarithms are exponents.
+By definition $b^{\log_b(y)} = y$.
+Since $b$ is positive, so is any power of $b$.
+Thus $\log_b(y)$ is undefined when $y$ is negative because no power of a 
+positive number can give us a negative number.
+
+Logarithms have properties that follow immediately from the fact that they are exponents.
+
+\noindent
+\textbf{Properties of Logarithms}.  Suppose $b > 0$ and $b \neq 1$.
+\begin{itemize}
+\item $ \log_b{1} = 0 $ because $b^0 = 1$.
+\item $ \log_b{b} = 1 $ because $b^1 = b$.
+\item $ b^x = y$ if and only if $\log_b(y) = x$.
+
+\medskip
+\item $\log_b(xy) = \log_b(x) + \log_b(y)$ because $b^{\log_b(x) + \log_b(y)} = b^{log_b(x)}  b^{\log_b(y)} = xy$.
+\item $\log_b(a^x) = x \log_b(a)$ because $b^{x \log_b(a)} = \left(b^{\log_b(a)}\right)^x = a^x$.
+\item $\log_b\left(\frac{x}{y}\right) =  \log_b(x) - \log_b(y)$ because 
+$b^{ \log_b(x) - \log_b(y)} = b^{log_b(x)}  b^{-\log_b(y)} = 
+ b^{log_b(x)}  \cdot \frac{1}{b^{\log_b(y)}} = 
+\frac{x}{y}$.
+
+%\item $ \log_a{b} - \log_a{c} = \log_a{\frac{b}{c}}$
+%\item $\log_a{x}=\frac{\log_b{x}}{\log_b{a}}$ 
+\end{itemize}
+
+When the base $b$ is omitted, as in $\log(100)$, it is assumed to be 10.
+Logarithms to base 10 are called \textbf{common logarithms}.
+Logarithms to base $e$ are called \textbf{natural logarithms}, and denoted by $ln(x)$ rather than $log_e(x)$.
+
+%\item If we do not write a base in the logarithm then we assume the base is 10. In other words, $ \log{x} = \log_{10}{x} $.
+%\item When the base of the logarithm is $e$ then we say it is the natural logarithm of $x$ and denote it $\ln{x}$.
+
+%\item $\log_a{a^y} = y $ because by rolling $ \log_a{a^y} = y\log_a{a} $ and $ \log_a{a} = 1 $
+
+
+\begin{example}
+Evaluate each expression.
+
+\normalfont
+\begin{itemize}
+\item $ \log_2{(2)} = 1$
+\item $ \log{(100)} = \log{(10^2)} = \log_{10}{(10^2)} = 2 $
+\item $ \log_{6}{(12)} + \log_{6}{(18)} = \log_{6}{(12 \cdot 18)} = \log_{6}{(216)} = \log_{6}{(6^3)} = 3$
+\item $ \log_{5}{(2500)} - \log_{5}{(4)} = \log_{5}{(\frac{2500}{4})} = \log_{5}{(625)} = \log_{5}{(5^4)} = 4$
+\item $  \log(5b) + \log(2c^2) = \log(10bc^2) = \log(10) + \log(bc^2) = 1 + \log(bc^2)$
+\end{itemize}
+\end{example}
+
+\begin{example}. Solve $  \log_8(x) + \log_8(x - 12) = 2 $.
+
+\normalfont
+We have 
+$2 = \log_8(x) + \log_8(x - 12) = \log_8(x(x - 12))$, so that
+$8^2 = x(x - 12)$, by the definition of logarithms.
+Thus $x^2 - 12 - 64 = 0$.  By factoring (or using the quadratic formula first for help), 
+this is the same as $ (x-16)(x+4) = 0$.
+Therefore  $ x = 16 $ or $ x = -4$.  
+But $x = -4$ is not a solution, as $\log_8(-4)$ is undefined.
+Hence the solution is $x = 16$.
+
+%\begin {itemize}
+%\item $ \log_8x + \log_8(x - 12) = 2 $
+%\item $ \log_8x(x - 12) = 2 $
+%\item $ x(x-12) = 8^2 = 64$
+%\item $ x^2 - 12 - 64 = 0 $ Factor this.
+%\item $ (x-16)(x+4) = 0$
+%\item Thus $ x = 16 $ or $ x = -4$
+%\item However, x = -4 must be rejected because it will make the logarithms negative, so the answer is x = 16
+%\end{itemize}
+%\end{itemize}
+\end{example}
+
+For a positive real number $b \neq 1$, the \textbf{logarithm function with base $b$} is the function $f(x) = \log_b(x)$.
+Its domain is the set of positive real numbers.  Its range is the set of all real numbers.
+
+Notice that the functions $f(x) = b^x$ and $g(y) = \log_b(y)$ are inverses by definition:  
+$b^x = y$ if and only if $\log_b(y) = x$.  
+Thus, if $b \neq 1$, the logarithm function with base $b$ is the inverse of the exponential function 
+with base $b$.  (The function $f(x) = 1^x$ does not have an inverse because, for example $1^2 = 1^3 = 1$.)
+
+Finally, we observe that logarithm functions with different bases are just multiples of each other.
+We know $b^{\log_b(x)} = x$.  
+Therefore, 
+$\log_a\left(b^{\log_b(x)}\right) = \log_a(x)$.
+From one of the properties of logarithms, we know that $\log_a\left(b^{\log_b(x)}\right) =\log_b(x) \log_a(b)$, and so this is the same as 
+$\log_b(x) \log_a(b) = \log_a(x)$.
+Since $\log_a(b)$ is a number, this says that $\log_a(x)$ is a multiple of $\log_b(x)$.
+
+The graphs of $f(x) = log(x)$ and $g(x) = \ln(x)$ are shown below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=3.7,ymax=3,
+          axis lines=middle,
+          restrict y to domain=-7:12,
+          enlargelimits]
+\addplot[red, domain=-0.2:3.3,samples=100]  {log10(x)} node[below]{$f(x) = \log(x)$};
+\addplot[blue, domain=-0.2:3.3,samples=100]  {ln(x)} node[above]{$g(x) = \ln(x)$};
+
+%\addplot[blue,domain=-3:3,samples=100]  {5*log10{x+2}} node[below left]{$y=5\log_{10}{x+2}$};
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+The same principles as before of shifting graphs or stretching them vertically or horizontally apply.
+
+\begin{example}
+Sketch the graph of $f(x) = 5\log(x+2) + 3$.
+
+\normalfont
+This graph has the same basic shape as the graph of $y = \log(x)$.
+It is shifted upwards by 3 and left by 2.
+Also, it is stretched in the vertical direction by a factor of 5.
+
+After plotting a few well chosen points and sketching a curve of the correct shape through them,
+one arrives at the graph below.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=6,ymax=7,
+          axis lines=middle,
+          restrict y to domain=-7:12,
+          enlargelimits]
+\addplot[blue,domain=-1.999:6,samples=100]  {5*log10{x+2}} node[above left]{$y=5\log_{10}{x+2} + 3$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{example}
+ 
+\subsection{Practice Problems}
+In questions 1 to 5, use the properties of logarithms to to find an equivalent, arguably simpler, expression.
+\begin{enumerate}
+\item $ \log_{6}{(12)} + \log_{6}{(18)} $ 
+\item $ \log_8(x) + \log_8(x - 12)  $ 
+\item $\log_{5}{(2500)} - \log_{5}{(4)} $ 
+\item $   \log(5b) + \log(2c^2) $ 
+\item $ \log_{25}{(7)} + \log_5{(3)} $ 
+
+\bigskip
+\item Sketch the graph of  $ h(x)=1-5\log{(1-\frac{x}{2})}$.
+\end{enumerate}
+
+\newpage
+\subsection{Solutions} 
+1. $3$\quad 2. $\log_{8}{(x^2-12x)}$ \quad 3. $4$ \quad 4. $\log(10bc^2)$ \quad 5. $\frac{2\log{(3)}+\log{(7)}}{2\log{(5)}}$
+
+\noindent
+6. 
+\begin{center}
+ \begin{tikzpicture}
+\begin{axis}[grid=both,
+          xmax=10,ymax=7,
+          axis lines=middle,
+          enlargelimits]
+\addplot[blue, domain=-50:5]  {1-(5*ln(1-(x/2)))} node[above]{$h(x)=1-5\log{(1-\frac{x}{2})}$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\section{Systems of Inequalities}
+
+The solution to a system (or collection) of inequalities in one variable is the set of all numbers for which each inequality in the system is true.  
+Thus, one way to find the solution to a system of inequalities is to solve each inequality, and then identify the sets of points where the solutions overlap.
+Another way to do it is
+\begin{itemize}
+\item First, rewrite each expression in a form where the inequality is with respect to 0.
+\item  Find the collection of all numbers with the property that at least one expression is zero or an expression is undefined.  These partition the real line into a number of intervals.
+\item Pick a test point in each interval and check if every inequality in the system is true at that point.  If so, then all points on the interior of the interval belong to the solution set, and if not then no points in the interior of the interval belong to the solution set.
+\item Be careful about what happens at the endpoints of the intervals.
+\end{itemize}
+
+\begin{example}  Find the solution set to the system of inequalities
+\begin{eqnarray*}
+x^2 - 4x &\geq& -3\\
+\frac{x-5}{x-7} &<& 0\\
+\end{eqnarray*}
+
+\normalfont
+The first inequality is equivalent to $x^2 - 4x + 3 \geq 0$.  
+The second one is already in a form where it is with respect to 0.
+
+Since $x^2 - 4x + 3 = (x - 3)(x-1)$, the first expression equals 0 when $x = 1$ or when $x = 3$.
+The expression $\frac{x-5}{x-7}$ equals zero when $x=5$, and is undefined when $x = 7$.
+Thus the set of points that partition the remainder of the real line into open intervals 
+is $\{1, 3, 5, 7\}$. 
+
+We need to test a point in each of the five intervals in the partition, and then be careful about the endpoints of the intervals.
+
+For the interval $(-\infty, 1)$ we pick $x = 0$ as the test point.  
+The first inequality does not hold when $x = 0$, so no point in $(-\infty, 1)$ belongs to 
+the solution set.
+The second inequality does not hold when $x = 1$, so this point is not in the solution set.
+
+For $(1, 3)$, we pick $x = 2$ as the test point.
+The first inequality does not hold when $x = 2$, so no point in $(1, 3)$ belongs to 
+the solution set.
+
+For the interval $(3, 5)$, we choose $x = 4$ as the test point.
+The first inequality holds when $x = 4$, but the second one does not, 
+so no point in $(3, 5)$ belongs to the solution set.
+The second inequality does not hold when $x = 5$, so this point is not in the solution set.
+
+For the interval $(5, 7)$, we choose $x = 6$ as the test point.
+Both inequalities hold when $x = 6$, so all points in $(5, 7)$ belong to the solution set.
+The second inequality is undefined at $x = 7$, so this point is not in the solution set.
+
+For the interval $(7, \infty)$, we choose $x = 8$ as the test point.
+The first equality holds when $x = 8$, but the second one does not, 
+so no point in $(7, \infty)$ belongs to the solution set.
+
+The solution set to the system of inequalities is therefore $(5, 7)$.  Its graph on the real line is shown below.
+
+\begin{center}
+
+\begin{tikzpicture}
+\draw[latex-latex] (0.5,0) -- (8.5,0) ; %edit here for the axis
+\foreach \x in  {1,2,3,4,5,6,7,8} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {1,2,3,4,5,6,7,8} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick] (5,0) -- (7,0);
+\filldraw[fill=white] (5,0) circle (.09cm);
+\filldraw[fill=white] (7,0) circle (.09cm);
+
+\end{tikzpicture}
+
+\end{center}
+\end{example}
+
+
+The same ideas are used when graphing the solution to a system of inequalities in the plane.
+
+\begin{example}
+Graph the solution set to the system of inequalities
+\begin{eqnarray*}
+x + y &\geq& 3\\
+2x - y &\leq& 5\\
+2y &\leq& x + 3\\
+\end{eqnarray*}
+
+\normalfont
+The system of inequalities van be rewritten as
+\begin{eqnarray*}
+y &\geq& -x + 3\\
+y &>& 2x - 5\\
+y &\leq& (x + 3)/2\\
+\end{eqnarray*}
+
+The next step is to graph the three lines $y = -x + 3$, $y = 2x-5$, and $y = (x + 3)/2$.
+Since the second inequality is $y > 2x - 5$, a dashed line is used for $y = 2x-5$, to indicate that points on that line are not included in the solution set.
+
+\begin{center}
+\begin{tikzpicture}
+
+    \draw[gray!50, thin, step=0.5] (-1,-1) grid (5,4);
+    \draw[very thick,->] (-1,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,-1) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-1,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-1,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+%    \fill[blue!50!cyan,opacity=0.3] (8/3,1/3) -- (1,2) -- (13/3,11/3) -- cycle;
+
+    \draw (-1,4) -- node[below,sloped] {\tiny$y=-x+3$} (4, -1);
+    \draw[dashed] (2, -1) -- (3,1) -- node[below left,sloped] {\tiny$y=2x-5$} (4.5,4);
+    \draw (-1,1) -- node[above,sloped] {\tiny$y=(x+3)/2$} (5,4);
+
+\end{tikzpicture}
+\end{center}
+
+These three lines partition the remainder of the plane into 7 regions.
+We need to pick a test point in each region and see for which of these points
+all inequalities in the system hold.  
+
+We will spare you the details.  The only region in what all inequalities in 
+the system hold for the test point is the interior triangle.
+The graph of the solution set is shown below.
+
+%Sketch the region of the x,y-plane that satisfies all of the following inequalities.
+%\\ 
+%$x + y \geq 3$,  $2x - y \leq 5$, $ 2y \leq x + 3$.
+%
+%We graph each of the inequalities and then use a test point to determine which region in is the set of each inequality. Using $(0,0)$ as a test point. 
+%
+%$0 \geq 3$, False 
+%
+%$0 \leq 5$, True 
+%
+%$ 0 \leq  3$  True
+%
+%We then take the intersection of the shaded regions for the region that satisfies all of the inequalites. 
+
+
+\begin{center}
+\begin{tikzpicture}
+
+    \draw[gray!50, thin, step=0.5] (-1,-1) grid (5,4);
+    \draw[very thick,->] (-1,0) -- (5.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,-1) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-1,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-1,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+    \fill[blue!50!cyan,opacity=0.3] (8/3,1/3) -- (1,2) -- (13/3,11/3) -- cycle;
+
+    \draw (-1,4) -- node[below,sloped] {\tiny$y=-x+3$} (4, -1);
+    \draw[dashed] (2, -1) -- (3,1) -- node[below left,sloped] {\tiny$y=2x-5$} (4.5,4);
+    \draw (-1,1) -- node[above,sloped] {\tiny$y=(x+3)/2$} (5,4);
+
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+
+%
+%\begin{example}
+%Sketch the region of the x,y-plane that satisfies all of the following inequalities. 
+%\\
+%$\frac{1}{2}(-x^2 + 3x +4) \geq y$, and $y \geq -x+4$
+%
+%We graph each of the inequalities and then use a test point to determine which region in is the set of each inequality. Using $(0,0)$ as a test point. 
+%
+%$2 \geq 0$, True 
+%
+%$0 \geq 4$, False \\
+%
+%We then take the intersection of the shaded regions for the region that satisfies all of the inequalities. 
+%
+%\begin{center}
+%\begin{tikzpicture}
+%    \draw[gray!50, thin, step=0.5] (-1,-1) grid (5,4);
+%    \draw[very thick,->] (-1,0) -- (5.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,-1) -- (0,4.2) node[above] {$y$};
+%
+%    \foreach \x in {-1,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-1,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%    
+%    
+%    \draw (-1,0) parabola[bend pos=0.5] bend +(0,3.125) +(5,0);
+%    \draw (0,4) -- (5,-1);
+%    
+%\clip (0,4) -- (4,4) -- (4,0) -- cycle;    
+%\clip (-1,0) parabola[bend pos=0.5] bend +(0,3.125) +(5,0) -- (4,0) --(-1,0);
+%
+%\fill [blue!50!cyan,opacity=0.3]  (0,0) rectangle (4,4);
+%
+%\end{tikzpicture}
+%\end{center}
+%\end{example}
+%
+%\begin{example}
+%Sketch the region of the x,y-plane that satisfies all of the following inequalities. 
+%\\
+%$y\geq x^2+3x$, $y\geq x+3$
+%
+%We graph each of the inequalities and then use a test point to determine which region in is the set of each inequality. Using $(0,0)$ as a test point. 
+%
+%$0 \geq 0$, False 
+%
+%$0 \geq 3$, False \\
+%
+%We then take the intersection of the shaded regions for the region that satisfies all of the inequalities.
+%
+%\begin{center}
+%\begin{tikzpicture}
+%    \draw[gray!50, thin, step=0.5] (0,-1) grid (4,4);
+%    \draw[very thick,->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,-1) -- (0,4.2) node[above] {$y$};
+%
+%    \foreach \x in {0,...,4} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-1,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%    
+%    
+%    \draw (0,0) parabola[bend pos=0.5] bend +(0,3.125) +(3,0);;
+%    \draw (0,3) -- (4,-1);
+%    
+%\clip (0,3) -- (0,4)--(5,4) -- (4,-1)-- (3,0)-- cycle;    
+%\clip (0,0) parabola[bend pos=0.5] bend +(0,3.125) +(3,0)--(3,0) --(4,-1)--(5,4)--(0,4)--(0,0);
+%
+%\fill [blue!50!cyan,opacity=0.3]  (0,-1) rectangle (4,4);
+%
+%\end{tikzpicture}
+%\end{center}
+%\end{example}
+
+\subsection{Practice Problems}
+Sketch the region
+\begin{enumerate}
+\item Find the solution set to the system of inequalities
+$3 - \frac{2x - 4}{x} \geq 0,\quad x^2 < 9$,
+and graph it on the real line.
+
+\item Find the solution set to the system of inequalities
+$(x - 1)^3 \leq 0, \ \quad 3x \geq 5$,
+and graph it on the real line.
+
+%\item $x + y \geq 5$,  $3x - y \leq 6$, $ 2y \leq x + 1$.
+%\item $y \geq 2x- 3$,  $y \geq -3$, $ y \leq -\frac{8}{10}x + \frac{5}{2}$.
+\item  Graph the solution set to the system of inequalities
+$\frac{2}{3}x - 4 \leq y, \quad y \leq -\frac{1}{5}x + 4$.
+%\item $\frac{1}{2}(-2x^2 + 8x) \geq y$, and $y \geq -x+4 $ 
+\item Graph the solution set to the system of inequalities
+$(x^2 - 7x +10) \leq y, \quad y \leq -x+3$
+\end{enumerate}
+
+\subsection{Solutions} 
+1.  The solution set is $(0,3)$ and it is graphed on the real line below.\\
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (7.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[very thick, -] (0,0) -- (3,0);
+\filldraw[fill=white] (0,0) circle (.09cm);
+\filldraw[fill=white] (3,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+2. There is no solution set, but the graph below shows the two inequalities on the real line. The black line is $(x - 1)^3 \leq 0$ and the blue line is $3x \geq 5$; because they do not intersect, there are no points in the solution set.
+\begin{center}
+\begin{tikzpicture}
+\draw[latex-latex] (-3.5,0) -- (7.5,0) ; %edit here for the axis
+\foreach \x in  {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the vertical lines
+\draw[shift={(\x,0)},color=black] (0pt,3pt) -- (0pt,-3pt);
+\foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7} % edit here for the numbers
+\draw[shift={(\x,0)},color=black] (0pt,0pt) -- (0pt,-3pt) node[below] 
+{$\x$};
+
+\draw[blue,very thick, ->] (5/3,0) -- (7.46,0);
+\filldraw[fill=blue] (5/3,0) circle (.09cm);
+
+\draw[very thick,->] (1,0) -- (-3.44,0);
+\filldraw[fill=black] (1,0) circle (.09cm);
+
+\end{tikzpicture}
+\end{center}
+%1. \begin{tikzpicture}
+%
+%    \draw[gray!50, thin, step=0.5] (-1,0) grid (5,3);
+%    \draw[very thick,->] (-1,0) -- (5.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,0) -- (0,3.2) node[above] {$y$};
+%
+%    \foreach \x in {-1,...,5} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {0,...,3} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%    \fill[blue!50!cyan,opacity=0.3] (2.6,1.75) -- (3,2) -- (2.75,2.3) -- cycle;
+%
+%    \draw (2,3) -- node[below,sloped] {\tiny$x+y\geq5$} (5,0);
+%    \draw (2,0) -- node[below left,sloped] {\tiny$3x-y\leq6$} (3,3);
+%    \draw (-1,0) -- node[above,sloped] {\tiny$2y\leq x+1$} (5,3);
+%
+%\end{tikzpicture}
+%2. \begin{tikzpicture}[scale=0.75]
+%
+%    \draw[gray!50, thin, step=0.5] (-1,-4) grid (9,2);
+%    \draw[very thick,->] (-1,0) -- (9.2,0) node[right] {$x$};
+%    \draw[very thick,->] (0,-4) -- (0,2.2) node[above] {$y$};
+%
+%    \foreach \x in {-1,...,9} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-4,...,2} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%    \fill[blue!50!cyan,opacity=0.3] (1.95,0.9) -- (0,-3) -- (55/8,-3) -- cycle;
+%
+%    \draw (0,-3) -- node[below,sloped] {\tiny$y\geq2x-3$} (5/2,2);
+%    \draw (-1,-3) -- node[below left] {\tiny$y \geq -3$} (9,-3);
+%    \draw (5/8,2) -- node[above,sloped] {\tiny$y\leq-\frac{8}{10}x+\frac{5}{2}$} (55/8,-3);
+%
+%\end{tikzpicture}
+3. 
+\begin{center}
+\begin{tikzpicture}[scale=0.5]
+
+    \draw[gray!50, thin, step=0.5] (-1,-3) grid (12,4);
+    \draw[very thick,->] (-1,0) -- (12.2,0) node[right] {$x$};
+    \draw[very thick,->] (0,-3) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-1,...,12} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-3,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+%    \fill[blue!50!cyan,opacity=0.3] (120/13,28/13) -- (12,8/5)-- (12,-3) -- (2,-3) -- cycle;	%Incorrect shading.
+    \fill[blue!50!cyan,opacity=0.3] (0,-3) --  (3/2,-3) -- (120/13,28/13) -- (0,4) -- (0,-3) -- cycle;
+
+    \draw (3/2,-3) -- node[above,sloped] {\tiny$y\geq \frac{2}{3}x-4$} (12,4);
+    \draw (0,4) -- node[above,sloped] {\tiny$y\leq -\frac{1}{5}x+4$} (12,8/5);
+
+\end{tikzpicture}
+\end{center}
+%4. \begin{tikzpicture}[scale=0.4]
+% \draw[gray!50, thin, step=0.5] (-5,-7) grid (8,8);
+%    \draw[thick,->] (-5,0) -- (8.2,0) node[right] {$x$};
+%    \draw[thick,->] (0,-7) -- (0,9.2) node[above] {$y$};
+%
+%    \foreach \x in {-5,...,8} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+%    \foreach \y in {-7,...,8} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+%
+%\draw[color=black,domain=-0.74:4.74] plot (\x,{1/2(-2*\x*\x+8*\x});
+%
+%\draw[color=black,domain=-4:8] plot (\x,{-\x+4});
+%
+%\filldraw[blue!50!cyan,opacity=0.3,domain=0.5:4] (0.5,3.5) -- plot (\x,{1/2(-2*\x*\x+8*\x})-- (4,0)--(8,-4)--(8,8) -- (-4,8)-- cycle;
+%\end{tikzpicture}\\
+%5. 
+4.  \begin{center}
+\begin{tikzpicture}[scale=0.5]
+ \draw[gray!50, thin, step=0.5] (-1,-5) grid (8,4);
+    \draw[thick,->] (-1,0) -- (8.2,0) node[right] {$x$};
+    \draw[thick,->] (0,-5) -- (0,4.2) node[above] {$y$};
+
+    \foreach \x in {-1,...,8} \draw (\x,0.05) -- (\x,-0.05) node[below] {\tiny\x};
+    \foreach \y in {-5,...,4} \draw (-0.05,\y) -- (0.05,\y) node[right] {\tiny\y};
+
+\draw[color=black,domain=1:6] plot (\x,{(\x*\x)-(7*\x)+10});
+
+\draw[color=black,domain=-1:8] plot (\x,{-\x+3});
+
+\filldraw[blue!50!cyan,opacity=0.3,domain=1.5:4.41]  plot (\x,{\x*\x-7*\x+10})-- (1.58,1.41)-- cycle;
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{document}
