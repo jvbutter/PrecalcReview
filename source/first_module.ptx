@@ -1,0 +1,8 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude"  xml:id="first_module">
+  <title>Module 1</title>
+  <xi:include  href="sec_numbers_and_ops.ptx"/>
+  <xi:include  href="sec_fractions.ptx"/>
+  <xi:include  href="sec_integer_exponents.ptx"/>
+  <xi:include  href="sec_intervals.ptx"/>
+  <xi:include  href="sec_graphing-intervals.ptx"/>
+</chapter>
